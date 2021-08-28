@@ -47,6 +47,60 @@ namespace LegacyTest
             Console.WriteLine($"Записей найдено:{result.Count()}");
         }
 
+        /// <summary>
+        /// Проверить расчет периодов
+        /// </summary>
+        [TestMethod]
+        public void Check_Transaction_CalsPeriods()
+        {
+            // Подготовка
+            var startPeriod = new DateTime(2021, 01, 10);
+            var stopPeriod = new DateTime(2021, 03, 12);
 
+            // Результат
+            var result = TransactionsPeriod.CalcPeriods(startPeriod, stopPeriod);
+
+            // Проверка
+            Assert.AreEqual(4, result.Count());
+            Assert.AreEqual(startPeriod, result.First());
+            Assert.AreEqual(stopPeriod, result.Last());
+        }
+
+        /// <summary>
+        /// Проверить расчет периодов при граничном условии
+        /// </summary>
+        [TestMethod]
+        public void Check_Transaction_CalcPeriods_OneMonth()
+        {
+            // Подготовка
+            var startPeriod = new DateTime(2021, 02, 10);
+            var stopPeriod = new DateTime(2021, 02, 28);
+
+            // Результат
+            var result = TransactionsPeriod.CalcPeriods(startPeriod, stopPeriod);
+
+            // Проверка
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual(startPeriod, result.First());
+            Assert.AreEqual(stopPeriod, result.Last());
+        }
+
+        /// <summary>
+        /// Проверить получение периодов
+        /// </summary>
+        [TestMethod]
+        public void Check_Transaction_GetPeriods()
+        {
+            // Подготовка
+            var transactions = new Transactions();
+
+            // Действие
+            var result = transactions.GetPeriods();
+
+            // Проверки
+            Assert.IsNotNull(result);
+            Assert.AreEqual(true, result.Count() > 0);
+            Console.WriteLine($"Записей {result.Count()}");
+        }
     }
 }

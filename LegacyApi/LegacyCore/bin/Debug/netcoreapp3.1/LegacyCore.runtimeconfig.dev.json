@@ -1,9 +1,9 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\valex\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\valex\\.nuget\\packages",
-      "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
+      "C:\\Users\\valex_home\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\valex_home\\.nuget\\packages",
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ]
   }
 }

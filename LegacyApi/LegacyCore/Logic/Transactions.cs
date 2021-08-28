@@ -67,26 +67,22 @@ namespace LegacyCore.Logic
         {
             var lastPeriod = this.LastPeriod;
             var currentperiod = this.CurrentPeriod;
+            var periods = TransactionsPeriod.CalcPeriods(lastPeriod, CurrentPeriod)
+                            .ToArray();
 
+            var list = periods.Take(periods.Count() - 1).ToArray();
 
-            throw new NotImplementedException();
+            var result = list
+                        .Select((x, index) => new TransactionsPeriod()
+                        {
+                            StartPeriod = x,
+                            StopPeriod = periods[index + 1]
+                        });
+
+            return result;
         }
 
         #endregion
-
-        /// <summary>
-        /// По указанным датам вернуть список дат - начало месяца
-        /// </summary>
-        /// <param name="startPeriod"></param>
-        /// <param name="stopPeriod"></param>
-        /// <returns></returns>
-        public IEnumerable<DateTime> CalcPeriods(DateTime startPeriod, DateTime stopPeriod)
-        {
-            if (startPeriod >= stopPeriod)
-                throw new ArgumentException($"Некорректно переданы параетры! Начальны период {startPeriod} >= {stopPeriod}");
-
-            return null;
-        }
 
 
         /// <summary>

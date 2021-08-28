@@ -2,14 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
+
 #nullable disable
 
 namespace LegacyCore.Models
 {
     public partial class legacyContext : DbContext
     {
+        
         public legacyContext()
         {
+           
         }
 
         public legacyContext(DbContextOptions<legacyContext> options)
@@ -31,8 +34,10 @@ namespace LegacyCore.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress2014;Database=legacy;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(
+                       @"Server=LEGACYSERVER\SQLEXPRESS;Database=LegacyStart;Trusted_Connection=No;Connection Timeout=500;User Id=sa;Password=123456;",
+                       opts => opts.CommandTimeout(99999)
+                       );
             }
         }
 
