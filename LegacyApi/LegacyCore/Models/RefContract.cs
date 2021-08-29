@@ -21,8 +21,6 @@ namespace LegacyCore.Models
         public long Id { get; set; }
         [StringLength(50)]
         public string ContractNumber { get; set; }
-        public long? CustomerId { get; set; }
-        public long? LimitId { get; set; }
         public string Comments { get; set; }
 
         [InverseProperty(nameof(TblTransaction.Contract))]

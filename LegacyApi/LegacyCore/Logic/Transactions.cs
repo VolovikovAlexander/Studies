@@ -88,15 +88,15 @@ namespace LegacyCore.Logic
         /// <summary>
         /// Последняя дата в справочнике refReportPeriods
         /// </summary>
-        private DateTime LastPeriod
+        public DateTime LastPeriod
         {
             get
             {
                 using (var context = new legacyContext())
                 {
                     // Последняя запись в таблице периодов
-                    var lastPeriod = context.RefReportPeriods.OrderByDescending(x => x.Period)
-                            .LastOrDefault()?.Period ?? new DateTime(1900, 1, 1);
+                    var lastPeriod = context.RefReportPeriods.OrderByDescending(x => x.StopPeriod)
+                            .LastOrDefault()?.StopPeriod ?? new DateTime(1900, 1, 1);
 
                     return lastPeriod;
                 }
@@ -106,17 +106,22 @@ namespace LegacyCore.Logic
         /// <summary>
         /// Получить последнюю дату в таблице фактов tblTransactionFacts
         /// </summary>
-        private DateTime CurrentPeriod
+        public DateTime CurrentPeriod
         {
             get
             {
                 using (var context = new legacyContext())
                 {
                     // Последняя запись в таблице периодов
-                    var lastPeriod = context.TblTransactionFacts.OrderByDescending(x => x.Period)
-                            .LastOrDefault()?.Period ?? DateTime.Now;
+                    var periods =
+                            from s in context.TblTransactionFacts
+                            group s by new { Period = s.Period } into g
+                            select new { g.Key.Period };
 
-                    return lastPeriod;
+                    var maxPeriod = periods.OrderByDescending(x => x.Period)
+                        .Select(x => x.Period);
+
+                    return maxPeriod?.FirstOrDefault() ?? DateTime.Now;
                 }
             }
         }

@@ -19,11 +19,13 @@ namespace LegacyCore.Models
 
         [Key]
         public long Id { get; set; }
-        public long? BankCode { get; set; }
+
         [StringLength(50)]
         public string AccountNumber { get; set; }
+
         [StringLength(50)]
         public string AccountType { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? LimitAmount { get; set; }
         public string Comments { get; set; }

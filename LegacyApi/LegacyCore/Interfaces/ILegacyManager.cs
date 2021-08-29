@@ -5,7 +5,7 @@ namespace LegacyCore.Interfaces
     // <summary>
     /// Интерфейс к бизнес системе обработки новых данных
     /// </summary>
-    public interface ILegacyFreshManager
+    public interface ILegacyManager
     {
         /// <summary>
         /// Объект для работы с новыми данными

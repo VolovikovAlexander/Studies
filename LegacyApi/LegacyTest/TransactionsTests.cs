@@ -10,43 +10,23 @@ namespace LegacyTest
     public class TransactionsTests
     {
         /// <summary>
-        /// Проверить метод IsSuccess
+        /// Получить максимальную дату в таблице refReportPeriods
         /// </summary>
         [TestMethod]
-        public void Check_Transaction_IsSuccess()
+        public void Check_Transaction_LastPeriod()
         {
             // Подготовка
             var transactions = new Transactions();
 
             // Действие
-            var result = transactions.IsSuccess;
+            var result = transactions.LastPeriod;
 
             // Проверка
-            Assert.AreEqual(true, result);
-        }
-
-        /// <summary>
-        /// Проверить метод GetNextRecords с различными вариантами
-        /// </summary>
-        /// <param name="source"></param>
-        [TestMethod]
-        public void Check_Transaction_GetNextRecords()
-        {
-            // Подготовка
-            ITransactionsPeriod source = new TransactionsPeriod()
-            { StartPeriod = new System.DateTime(2021, 1, 1), StopPeriod = new System.DateTime(2021, 01, 31) };
-            var transactions = new Transactions();
-
-            // Действие
-            var result = transactions.GetNextRecords(source);
-
-            // Проверки
             Assert.IsNotNull(result);
-            Assert.AreEqual(true, result.Any());
-
-            Console.WriteLine($"Записей найдено:{result.Count()}");
+            Console.WriteLine($"Последний период в истории {result}");
         }
 
+    
         /// <summary>
         /// Проверить расчет периодов
         /// </summary>
@@ -89,6 +69,7 @@ namespace LegacyTest
         /// Проверить получение периодов
         /// </summary>
         [TestMethod]
+        [TestCategory("Performance")]
         public void Check_Transaction_GetPeriods()
         {
             // Подготовка

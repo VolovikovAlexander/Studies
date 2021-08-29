@@ -21,8 +21,12 @@ namespace LegacyCore.Models
 
         [Key]
         public long Id { get; set; }
+
         [Column(TypeName = "datetime")]
-        public DateTime? Period { get; set; }
+        public DateTime StartPeriod { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime StopPeriod { get; set; }
         public string Comments { get; set; }
 
         [InverseProperty(nameof(RepCustomerHistory.Period))]
