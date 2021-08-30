@@ -5,7 +5,7 @@ namespace LegacyCore.Interfaces
     // <summary>
     /// Интерфейс к бизнес системе обработки новых данных
     /// </summary>
-    public interface ILegacyManager
+    public interface IBuildManager
     {
         /// <summary>
         /// Объект для работы с новыми данными
@@ -13,10 +13,10 @@ namespace LegacyCore.Interfaces
         public ITransactions transactions { get; set; }
 
         /// <summary>
-        /// Запустить процесс обработки новых данных
+        /// Объект для обработки транзакций
         /// </summary>
-        /// <returns></returns>
-        public IDictionary<ITransactionsPeriod, bool> RunProcess();
+        public IlogicBuildTransactions logic { get; set; }
+
 
         /// <summary>
         /// Запустить обработку одного пакета данных

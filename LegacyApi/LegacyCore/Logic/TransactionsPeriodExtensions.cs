@@ -12,6 +12,9 @@ namespace LegacyCore.Logic
         /// <returns></returns>
         public static RefReportPeriod ToRefReportPeriod(this ITransactionsPeriod source)
         {
+            if (source is null)
+                throw new System.ArgumentNullException("Некорректно переданы параметры!", nameof(source));
+
             return new RefReportPeriod()
             {
                 StartPeriod = source.StartPeriod,

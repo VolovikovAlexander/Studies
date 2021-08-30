@@ -40,7 +40,7 @@ namespace LegacyTest
                 StartPeriod = new DateTime(2021, 1, 1),
                 StopPeriod = new DateTime(2021, 1, 10)
             };
-            var manager = new LegacyManager();
+            var manager = new BuildManager();
 
             // Действие
             var result = manager.Build(period);
