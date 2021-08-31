@@ -294,3 +294,4 @@ C:\Projects\Legacy\Legacy\LegacyApi\LegacyTest\obj\Debug\netcoreapp3.1\LegacyTes
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyTest\obj\Debug\netcoreapp3.1\LegacyTest.dll
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyTest\obj\Debug\netcoreapp3.1\LegacyTest.pdb
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyTest\obj\Debug\netcoreapp3.1\LegacyTest.genruntimeconfig.cache
+C:\Projects\Legacy\Legacy\LegacyApi\LegacyTest\bin\Debug\netcoreapp3.1\Dapper.dll

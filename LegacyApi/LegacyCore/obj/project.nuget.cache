@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "4K7ntwlPpkCQ3WPR48+EUcTt4Y6YmU5+gxoCSYQZ9b6nxFleTVtVqwF6GRbF8iFUhqjGExUcjSpmiG8TfYlz9w==",
+  "dgSpecHash": "KQfphuAmAhnyLcLQwH9Gp+LXsbV7e9Zoo2rHskxdcqTSzUxTAxutQLlKPDQj5mjkeOV4f8iLQO82K9zofQ5oKw==",
   "success": true,
   "projectFilePath": "C:\\Projects\\Legacy\\Legacy\\LegacyApi\\LegacyCore\\LegacyCore.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\valex_home\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
@@ -65,7 +66,7 @@
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
-    "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
+    "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",

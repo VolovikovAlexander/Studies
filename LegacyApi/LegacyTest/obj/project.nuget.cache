@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "51aclGtB3TtotRVHcn1FgwPJnHBVNoyuaLrVAfylhlaV9jotca5+d4Tz9QOhr4r/83It2ILjxQoBq3r/D57EQA==",
+  "dgSpecHash": "0msLNkFlaBikodfmQySe3qT2ANrxPnqr40cYHnXRllGiBsbpwMqtm2JK2lsQRzkUURqt7Mu8i3cAtqrNRzwmWA==",
   "success": true,
   "projectFilePath": "C:\\Projects\\Legacy\\Legacy\\LegacyApi\\LegacyTest\\LegacyTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\valex_home\\.nuget\\packages\\coverlet.collector\\3.1.0\\coverlet.collector.3.1.0.nupkg.sha512",
+    "C:\\Users\\valex_home\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\microsoft.codecoverage\\16.11.0\\microsoft.codecoverage.16.11.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
@@ -99,7 +100,7 @@
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
-    "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
+    "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
     "C:\\Users\\valex_home\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",

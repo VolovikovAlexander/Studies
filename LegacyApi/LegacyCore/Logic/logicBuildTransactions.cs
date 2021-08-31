@@ -8,7 +8,7 @@ namespace LegacyCore.Logic
     /// <summary>
     /// Реализация интерфейса <see cref="IlogicBuildTransactions"/>
     /// </summary>
-    public class logicBuildTransactions : IlogicBuildTransactions
+    public class LogicBuildTransactions : IlogicBuildTransactions
     {
 
         #region Реализация IlogicBuildTransactions

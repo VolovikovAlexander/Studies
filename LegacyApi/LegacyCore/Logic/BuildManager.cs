@@ -40,7 +40,7 @@ namespace LegacyCore.Logic
 
             if (!this.IsSuccess(period)) return false;
 
-            _logic = _logic ?? new logicBuildTransactions();
+            _logic = _logic ?? new LogicBuildTransactions();
 
             // 1 Удалить старые записи
             _logic.RemoveRecord(period);

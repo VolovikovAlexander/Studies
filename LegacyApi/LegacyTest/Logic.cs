@@ -17,7 +17,7 @@ namespace LegacyTest
         public void Check_AddTransactions()
         {
             // Подготовка
-            var logic = new logicBuildTransactions();
+            var logic = new LogicBuildTransactions();
             var period = new TransactionsPeriod()
             {
                 StartPeriod = new DateTime(2021, 1, 1),
@@ -38,7 +38,28 @@ namespace LegacyTest
         public void Check_RemoveRecords()
         {
             // Подготовка
-            var logic = new logicBuildTransactions();
+            var logic = new LogicBuildTransactions();
+            var period = new TransactionsPeriod()
+            {
+                StartPeriod = new DateTime(2021, 1, 1),
+                StopPeriod = new DateTime(2021, 2, 1)
+            };
+
+            // Действие
+            var result = logic.RemoveRecord(period);
+
+            // Проверка
+            Assert.AreEqual(true, result);
+        }
+
+        /// <summary>
+        /// Проверить работу удаления записей
+        /// </summary>
+        [TestMethod]
+        public void Check_RemoveRecords_Dapper()
+        {
+            // Подготовка
+            var logic = new LogicBuildTransactionsWithDapper();
             var period = new TransactionsPeriod()
             {
                 StartPeriod = new DateTime(2021, 1, 1),
@@ -59,7 +80,7 @@ namespace LegacyTest
         public void Check_AddAccounts()
         {
             // Подготовка
-            var logic = new logicBuildTransactions();
+            var logic = new LogicBuildTransactions();
             var period = new TransactionsPeriod()
             {
                 StartPeriod = new DateTime(2021, 1, 1),
@@ -81,7 +102,7 @@ namespace LegacyTest
         public void Check_AddCustomers()
         {
             // Подготовка
-            var logic = new logicBuildTransactions();
+            var logic = new LogicBuildTransactions();
             var period = new TransactionsPeriod()
             {
                 StartPeriod = new DateTime(2021, 1, 1),
@@ -103,7 +124,7 @@ namespace LegacyTest
         public void Check_AddContracts()
         {
             // Подготовка
-            var logic = new logicBuildTransactions();
+            var logic = new LogicBuildTransactions();
             var period = new TransactionsPeriod()
             {
                 StartPeriod = new DateTime(2021, 1, 1),
