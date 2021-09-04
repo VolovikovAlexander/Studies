@@ -1,9 +1,7 @@
 ﻿using LegacyCore.Interfaces;
 using LegacyCore.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LegacyCore.Logic
 {
@@ -12,8 +10,8 @@ namespace LegacyCore.Logic
     /// </summary>
     public class BuildManager : IBuildManager
     {
-        private ITransactions _transactions;
-        private IlogicBuildTransactions _logic;
+        protected ITransactions _transactions;
+        protected IlogicBuildTransactions _logic;
 
 
         #region Свойства
@@ -29,7 +27,7 @@ namespace LegacyCore.Logic
         /// </summary>
         /// <param name="period"></param>
         /// <returns></returns>
-        public bool Build(ITransactionsPeriod period)
+        public virtual bool Build(ITransactionsPeriod period)
         {
             if (period is null)
                 throw new ArgumentNullException("Некорректно переданы параметры!", nameof(period));
@@ -43,7 +41,7 @@ namespace LegacyCore.Logic
             _logic = _logic ?? new LogicBuildTransactions();
 
             // 1 Удалить старые записи
-            _logic.RemoveRecord(period);
+            _logic.RemoveRecords(period);
 
             // 2. Добавим новых клиентов
             _logic.AddCustomers(period);
@@ -62,14 +60,12 @@ namespace LegacyCore.Logic
 
         #endregion
 
-
-
         /// <summary>
         /// Проверить наличие записей за указанный период
         /// </summary>
         /// <param name="period"></param>
         /// <returns></returns>
-        private bool IsSuccess(ITransactionsPeriod period)
+        protected bool IsSuccess(ITransactionsPeriod period)
         {
             using (var context = new legacyContext())
             {

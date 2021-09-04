@@ -29,7 +29,6 @@ C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\bin\Debug\netcoreapp3.1\LegacyApi.
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\bin\Debug\netcoreapp3.1\LegacyApi.runtimeconfig.dev.json
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\bin\Debug\netcoreapp3.1\LegacyApi.dll
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\bin\Debug\netcoreapp3.1\LegacyApi.pdb
-C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.csproj.AssemblyReference.cache
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.GeneratedMSBuildEditorConfig.editorconfig
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.AssemblyInfoInputs.cache
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.AssemblyInfo.cs

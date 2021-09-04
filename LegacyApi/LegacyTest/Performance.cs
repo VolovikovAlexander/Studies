@@ -27,6 +27,31 @@ namespace LegacyTest
             Console.WriteLine($"Максимальная дата в таблице tblTransactionFacts {result}");
 
         }
+
+        /// <summary>
+        /// Проверка бизнес логики с использованием многопоточности
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Performance")]
+        public void Check_Manager_Build_Threads()
+        {
+            // Подготовка
+            var period = new TransactionsPeriod()
+            {
+                StartPeriod = new DateTime(2021, 1, 1),
+                StopPeriod = new DateTime(2021, 1, 10)
+            };
+
+            var manager = new BuildManagerThreads();
+
+            // Действие
+            var result = manager.Build(period);
+
+            // Проверка
+            Assert.AreEqual(true, result);
+        }
+
+
         /// <summary>
         /// Проверка работы метода Build
         /// </summary>

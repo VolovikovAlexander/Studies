@@ -1,4 +1,5 @@
 ﻿using LegacyCore.Interfaces;
+using LegacyCore.Models;
 using System;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ namespace LegacyCore.Logic
     {
         private DateTime _startPeriod = new DateTime(1900, 1, 1);
         private DateTime _stopPeriod = DateTime.Now;
+
         public DateTime StartPeriod { get => _startPeriod; set => _startPeriod = value; }
         public DateTime StopPeriod { get => _stopPeriod; set => _stopPeriod = value; }
 

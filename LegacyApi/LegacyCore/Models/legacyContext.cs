@@ -35,7 +35,7 @@ namespace LegacyCore.Models
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer(
-                       @"Server=LEGACYSERVER\SQLEXPRESS;Database=LegacyFinish;Trusted_Connection=No;Connection Timeout=500;User Id=sa;Password=123456;",
+                       @"Server=LEGACYSERVER\SQLEXPRESS;Database=LegacyFinish;Trusted_Connection=No;Connection Timeout=500;User Id=sa;Password=123456",
                        opts => opts.CommandTimeout(99999)
                        );
             }

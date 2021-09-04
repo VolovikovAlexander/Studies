@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using LegacyCore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LegacyCore.Interfaces
 {
@@ -12,7 +13,7 @@ namespace LegacyCore.Interfaces
         /// Удалить подготовденные данные
         /// </summary>
         /// <returns></returns>
-        public bool RemoveRecord(ITransactionsPeriod period);
+        public bool RemoveRecords(ITransactionsPeriod period);
 
         /// <summary>
         /// Получить выборку данных из таблицы фактов

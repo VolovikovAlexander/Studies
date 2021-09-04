@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LegacyCore.Models;
+using System;
 
 namespace LegacyCore.Interfaces
 {
@@ -10,5 +11,6 @@ namespace LegacyCore.Interfaces
         public DateTime StartPeriod { get; set; }
 
         public DateTime StopPeriod { get; set; }
+
     }
 }

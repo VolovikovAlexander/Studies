@@ -4,9 +4,17 @@ using Microsoft.Data.SqlClient;
 
 namespace LegacyCore.Logic
 {
+    /// <summary>
+    /// Класс наследник от <see cref="LogicBuildTransactions"/> для переопределения операции удаления данных.
+    /// </summary>
     public class LogicBuildTransactionsWithDapper: LogicBuildTransactions
     {
-        public override bool RemoveRecord(ITransactionsPeriod period)
+        /// <summary>
+        /// Удалить старые данные перед вставкой новых записей
+        /// </summary>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        public override bool RemoveRecords(ITransactionsPeriod period)
         {
             var dbPeriod = GetPeriod(period);
 

@@ -1,5 +1,5 @@
 -- ќчистить оперативные данные дл€ проведени€ замера
-
+use [LegacyFinish]
 Delete from [dbo].[refReportPeriods]
 Delete from [dbo].[refAccounts]
 Delete from [dbo].[refContracts]

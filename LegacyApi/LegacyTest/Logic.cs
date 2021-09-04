@@ -46,7 +46,7 @@ namespace LegacyTest
             };
 
             // Действие
-            var result = logic.RemoveRecord(period);
+            var result = logic.RemoveRecords(period);
 
             // Проверка
             Assert.AreEqual(true, result);
@@ -67,7 +67,7 @@ namespace LegacyTest
             };
 
             // Действие
-            var result = logic.RemoveRecord(period);
+            var result = logic.RemoveRecords(period);
 
             // Проверка
             Assert.AreEqual(true, result);
