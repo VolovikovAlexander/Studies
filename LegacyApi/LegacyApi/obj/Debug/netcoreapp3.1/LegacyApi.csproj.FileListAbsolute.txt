@@ -41,3 +41,4 @@ C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.dll
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.pdb
 C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.genruntimeconfig.cache
+C:\Projects\Legacy\Legacy\LegacyApi\LegacyApi\obj\Debug\netcoreapp3.1\LegacyApi.csproj.AssemblyReference.cache
