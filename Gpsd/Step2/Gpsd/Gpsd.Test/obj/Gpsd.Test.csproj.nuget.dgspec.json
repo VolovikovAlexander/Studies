@@ -1,0 +1,140 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj": {}
+  },
+  "projects": {
+    "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj",
+        "projectName": "Gpsd.Core",
+        "projectPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj",
+        "packagesPath": "/home/valex/.nuget/packages/",
+        "outputPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/valex/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/valex/.dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
+        "projectName": "Gpsd.Test",
+        "projectPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
+        "packagesPath": "/home/valex/.nuget/packages/",
+        "outputPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/valex/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj": {
+                "projectPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.1.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
+            "NUnit.Analyzers": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.2.1, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/valex/.dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

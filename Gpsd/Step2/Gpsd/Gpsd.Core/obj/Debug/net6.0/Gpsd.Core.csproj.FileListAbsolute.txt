@@ -1,0 +1,14 @@
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/bin/Debug/net6.0/gpsd_exists_data.json
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/bin/Debug/net6.0/gpsd_not_exists_data.json
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/bin/Debug/net6.0/Gpsd.Core.deps.json
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/bin/Debug/net6.0/Gpsd.Core.dll
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/bin/Debug/net6.0/Gpsd.Core.pdb
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.csproj.AssemblyReference.cache
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.AssemblyInfoInputs.cache
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.AssemblyInfo.cs
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.csproj.CoreCompileInputs.cache
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.dll
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/refint/Gpsd.Core.dll
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/Gpsd.Core.pdb
+/home/valex/Projects/Study/Gpsd/Gpsd.Core/obj/Debug/net6.0/ref/Gpsd.Core.dll
