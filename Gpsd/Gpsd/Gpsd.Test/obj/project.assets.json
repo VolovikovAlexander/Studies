@@ -3989,11 +3989,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
+      "projectUniqueName": "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
       "projectName": "Gpsd.Test",
-      "projectPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
+      "projectPath": "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
       "packagesPath": "/home/valex/.nuget/packages/",
-      "outputPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/obj/",
+      "outputPath": "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/valex/.nuget/NuGet/NuGet.Config"
@@ -4008,8 +4008,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj": {
-              "projectPath": "/home/valex/Projects/Study/Gpsd/Gpsd.Core/Gpsd.Core.csproj"
+            "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Core/Gpsd.Core.csproj": {
+              "projectPath": "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Core/Gpsd.Core.csproj"
             }
           }
         }

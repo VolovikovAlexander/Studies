@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "M7lGGbr69zxcWyHHo/OhbuL3pdiOpJCnos7G8AsnJV/exv7WXbWRp93xqWCvCaNzGduAKhVszZjhBfrTuaVbPA==",
+  "dgSpecHash": "/I7JksGQcsrFX91+z1gNtDD7vgz1QOAHtX4dwRqZSAHEfKhu857LquKCgguu2ckVY/0fjdGTy2I696YZRpLWvQ==",
   "success": true,
-  "projectFilePath": "/home/valex/Projects/Study/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
+  "projectFilePath": "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test/Gpsd.Test.csproj",
   "expectedPackageFiles": [
     "/home/valex/.nuget/packages/coverlet.collector/3.1.2/coverlet.collector.3.1.2.nupkg.sha512",
     "/home/valex/.nuget/packages/microsoft.codecoverage/17.1.0/microsoft.codecoverage.17.1.0.nupkg.sha512",
