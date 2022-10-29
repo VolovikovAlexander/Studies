@@ -1,0 +1,26 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c151b893_002Df70a_002D4ba8_002Da3cb_002D840fcbe7f654/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Gpsd.Test&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;And&gt;
+      &lt;TestAncestor&gt;
+        &lt;TestId&gt;NUnit3x::E7B22202-3836-4C8A-ABF0-F10111ED97F0::net6.0::Gpsd.Test.GpsdDataFactoryTests.Check_GetType_Try&lt;/TestId&gt;
+      &lt;/TestAncestor&gt;
+      &lt;Project Location="/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test" Presentation="&amp;lt;Gpsd.Test&amp;gt;" /&gt;
+      &lt;Namespace&gt;Gpsd.Test&lt;/Namespace&gt;
+    &lt;/And&gt;
+    &lt;And&gt;
+      &lt;TestAncestor&gt;
+        &lt;TestId&gt;NUnit3x::E7B22202-3836-4C8A-ABF0-F10111ED97F0::net6.0::Gpsd.Test.GpsdDataFactoryTests.Check_GetType_Fail&lt;/TestId&gt;
+      &lt;/TestAncestor&gt;
+      &lt;Project Location="/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test" Presentation="&amp;lt;Gpsd.Test&amp;gt;" /&gt;
+      &lt;Namespace&gt;Gpsd.Test&lt;/Namespace&gt;
+    &lt;/And&gt;
+    &lt;And&gt;
+      &lt;TestAncestor&gt;
+        &lt;TestId&gt;NUnit3x::E7B22202-3836-4C8A-ABF0-F10111ED97F0::net6.0::Gpsd.Test.GpsdDataManagerTests.Check_Get_GpsdSkyModel&lt;/TestId&gt;
+      &lt;/TestAncestor&gt;
+      &lt;Project Location="/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Test" Presentation="&amp;lt;Gpsd.Test&amp;gt;" /&gt;
+      &lt;Namespace&gt;Gpsd.Test&lt;/Namespace&gt;
+    &lt;/And&gt;
+  &lt;/Or&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
