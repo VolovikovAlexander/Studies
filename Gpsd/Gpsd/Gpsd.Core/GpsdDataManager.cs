@@ -9,6 +9,12 @@ namespace Gpsd.Core;
 public class GpsdDataManager
 {
     private readonly GpsdDataFactory _factory = new GpsdDataFactory();
+    private GpsdObserveProvider _provider = new GpsdObserveProvider();
+
+    public GpsdDataManager()
+    {
+        _provider.Subscribe(new GpsdObserverVersion());
+    }
     
     /// <summary>
     /// Сконвертировать строковые данные в модель типа <see cref="IGpsDataModel"/>
