@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "j0fVdhv8v4LlINgf3vh/CwWibhE7Imi/iFUSj/mkvJSvlxDhFGzeV+RJCSZm6TO9oVZ7PjG+6IGne9uYvTmTPw==",
+  "success": true,
+  "projectFilePath": "/home/valex/Projects/Studies/Gpsd/Gpsd/Gpsd.Core/Gpsd.Core.csproj",
+  "expectedPackageFiles": [
+    "/home/valex/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.2/microsoft.extensions.logging.abstractions.6.0.2.nupkg.sha512",
+    "/home/valex/.nuget/packages/npgsql/7.0.0-rc.2/npgsql.7.0.0-rc.2.nupkg.sha512",
+    "/home/valex/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
