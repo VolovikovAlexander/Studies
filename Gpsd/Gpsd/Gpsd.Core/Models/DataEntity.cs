@@ -7,7 +7,6 @@ namespace Gpsd.Core.Models;
 /// </summary>
 public abstract class DataEntity: IDataEntity
 {
-    [JsonPropertyName("id")]
     [JsonIgnore]
     public long Id { get; set; }
 }

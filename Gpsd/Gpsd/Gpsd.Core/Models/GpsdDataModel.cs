@@ -5,7 +5,7 @@ namespace Gpsd.Core.Models;
 /// <summary>
 /// Общий класс для создания серилиазационных моделей 
 /// </summary>
-public class GpsdDataModel: DataEntity, IGpsDataModel
+public abstract class GpsdDataModel: DataEntity, IGpsDataModel
 {
     private string _class = "";
     private DataModelType _modelType = DataModelType.NONAME;
@@ -13,7 +13,6 @@ public class GpsdDataModel: DataEntity, IGpsDataModel
     /// <summary>
     /// Наименование класса модели
     /// </summary>
-    [JsonPropertyName("class")]
     public string Class { get => _class;
         set
         {
@@ -27,4 +26,9 @@ public class GpsdDataModel: DataEntity, IGpsDataModel
     /// </summary>
     [JsonIgnore]
     public DataModelType ModelType => _modelType;
+
+    /// <summary>
+    /// Специальный код с типом данных
+    /// </summary>
+    public virtual long DataType => 0;
 }

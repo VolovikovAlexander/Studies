@@ -14,4 +14,9 @@ public class TableNameAttribute: Attribute
         
         _tableName = tableName;
     }
+
+    /// <summary>
+    /// Наименование связанной таблице в базе данных
+    /// </summary>
+    public string TableName => _tableName;
 }
