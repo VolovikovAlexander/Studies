@@ -1,6 +1,7 @@
 from Src.Models.Statuses import progress_status
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
+from datetime import datetime
 
 
 #
@@ -11,9 +12,11 @@ class act():
     __executor = None
     __contractors = {}
     __progress = None
+    __period = None
 
     def __init__(self):
         self.__progress = progress_status.start
+        self.__period = datetime.now()
 
 
     @property
@@ -44,31 +47,37 @@ class act():
             raise Exception("ОШИБКА! Параметр executor - должен быть типом executor!")
         
 
+    @property    
+    def period(self):
+        # Дата и время создания документа
+        return self.__period    
+        
+
     def contractors(self):
         # Свойство: Список застройщиков   
         items = list(self.__contractors)
         return items
         
 
-    def create(self_executor):
+    def create(_executor):
         # Фабричный метод    
         result = act()
-        result.executor = self_executor
-        result.add(self_executor.contraсtor)
+        result.executor = _executor
+        result.add(_executor.contraсtor)
 
         return result
         
 
-    def add(self, self_contractor):
+    def add(self, _contractor):
         # Добавить в документ исполнителей
-        if self_contractor is None:
+        if _contractor is None:
             return
         
-        if not isinstance(self_contractor, contractor):
+        if not isinstance(_contractor, contractor):
             raise Exception("ОШИБКА! Параметр self_contractor - должен быть типом contractor!")
         
-        self.__contractors[self_contractor.guid] = self_contractor
-        self.add(self_contractor.parent)
+        self.__contractors[_contractor.guid] = _contractor
+        self.add(_contractor.parent)
 
         
         

@@ -52,7 +52,7 @@ class models_tests(unittest.TestCase):
         parent = contractor.create(name="test", parent=None)
 
         # Действие
-        result = executor.create(name="test", self_contractor=parent)
+        result = executor.create(name="test", _contractor=parent)
 
         # Проверки
         assert result is not None
@@ -64,11 +64,10 @@ class models_tests(unittest.TestCase):
         # Подготовка
         contractor_parent = contractor.create(name="test1", parent=None)
         contractor_act = contractor.create(name="test2", parent=contractor_parent)
-        executor_act = executor.create(name="test3", self_contractor=contractor_act)
+        executor_act = executor.create(name="test3", _contractor=contractor_act)
 
         # Действие
-        result = act.create(self_executor=executor_act)
-        #result.add(contractor_act)
+        result = act.create(_executor=executor_act)
 
         # Проверки
         assert result is not None

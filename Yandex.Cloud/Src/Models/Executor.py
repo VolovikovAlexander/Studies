@@ -37,19 +37,19 @@ class executor():
         return self.__contractor
     
 
-    def create(name, self_contractor):
+    def create(name, _contractor):
          # Фабричный метод. Создать объект типа executor
         result = executor()
         result.name = name
         result.__guid = uuid.uuid4()
 
-        if self_contractor is None:
+        if _contractor is None:
             raise Exception("ОШИБКА! Параметр self_contractor должен быть указан!")
         
-        if not isinstance(self_contractor, contractor):
+        if not isinstance(_contractor, contractor):
             raise Exception("ОШИБКА! Параметр self_contractor - должен быть типом contractor!")
         
-        result.__contractor = contractor
+        result.__contractor = _contractor
         return result
 
 
