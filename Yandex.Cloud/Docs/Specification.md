@@ -52,7 +52,7 @@
 | [building](../Src/Models/Building.py) | Объект капитального строительства |
 | [contractor](../Src/Models/Contractor.py) | Застройщик / Подрядчик / Субподрядчик |
 | [executor](../Src/Models/Executor.py)  | Исполнитель   |
-| [Act](../Src/Models/Act.py)  | Акт |
+| [act](../Src/Models/Act.py)  | Документ **Акт фиксации замечаний** |
 
 
 

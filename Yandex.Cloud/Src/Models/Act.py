@@ -52,12 +52,9 @@ class act():
 
     def create(self_executor):
         # Фабричный метод    
-        if not isinstance(self_executor, executor):
-            raise Exception("ОШИБКА! Параметр self_executor - должен быть типом executor!")
-           
         result = act()
         result.executor = self_executor
-        result.add(self_executor.contrator)
+        result.add(self_executor.contraсtor)
 
         return result
         

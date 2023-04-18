@@ -32,7 +32,7 @@ class executor():
         return self.__guid    
     
     @property
-    def contrator(self):
+    def contraсtor(self):
         # Свойство: Организация исполнителя
         return self.__contractor
     
