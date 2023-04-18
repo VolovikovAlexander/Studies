@@ -46,7 +46,7 @@
 
 Создадим основные модели.
 
-#### Статусы
+#### Статус
 
 ```python
 #
@@ -65,7 +65,7 @@ class progress_status():
     finish = 5
 ```
 
-#### Строения
+#### Строение
 
 ```python
 import uuid
@@ -123,6 +123,135 @@ class building():
 
         return result
 
+```
+
+#### Подрядчик
+
+```python
+import uuid
+
+# 
+# Модель объекта - подрядчик / субподрядчик
+#
+class contractor():
+    __parent = None
+    __name = ""
+    __description = ""
+    __guid = ""
+
+
+    @property
+    def description(self):
+        # Свойство. Описание
+        return self.__description
+    
+    @description.setter
+    def description(self, value):
+        # Свойство. Описание
+        if not isinstance(value, str):
+            raise Exception("ОШИБКА! Параметр description - должен быть типом str!")
+
+        self.__description = value
+
+    
+    @property
+    def name(self):
+        # Свойство: Наименование
+        return self.__name
+    
+    def name(self, value):
+        # Свойство: Наименование
+        if not isinstance(value, str):
+            raise Exception("ОШИБКА! Параметр name - должен быть типом str!")
+        
+        if value == "":
+            raise Exception("ОШИБКА! Параметр name должен быть указан!")
+        
+        self.__name = value
+
+
+    @property
+    def guid(self):
+        # Свойство: Уникальный код объекта строительства
+        return self.__guid    
+    
+
+    @property
+    def parent(self):
+        # Свойство: Объект владелец
+        return self.__parent
+
+    def create( name, parent):
+        # Фабричный метод. Создать объект типа building
+        result = contractor()
+        result.name = name
+        result.__guid = uuid.uuid4()
+
+        if not parent is None:
+            if not isinstance(parent, contractor):
+                raise Exception("ОШИБКА! Параметр parent - должен быть типом contractor!")
+            
+            result.__parent = parent
+
+        return result
+```
+
+#### Исполнитель
+
+```python
+import uuid
+from Src.Models.Contractor import contractor
+
+#
+# Класс модель - исполнитель
+#
+class executor():
+    __name = ""
+    __guid = ""
+    __contractor = None
+
+
+    @property
+    def name(self):
+        # Свойство: Наименование
+        return self.__name
+    
+    def name(self, value):
+        # Свойство: Наименование
+        if not isinstance(value, str):
+            raise Exception("ОШИБКА! Параметр name - должен быть типом str!")
+        
+        if value == "":
+            raise Exception("ОШИБКА! Параметр name должен быть указан!")
+        
+        self.__name = value
+
+
+    @property
+    def guid(self):
+        # Свойство: Уникальный код объекта строительства
+        return self.__guid    
+    
+    @property
+    def contrator(self):
+        # Свойство: Организация исполнителя
+        return self.__contractor
+    
+
+    def create(name, self_contractor):
+         # Фабричный метод. Создать объект типа executor
+        result = executor()
+        result.name = name
+        result.__guid = uuid.uuid4()
+
+        if self_contractor is None:
+            raise Exception("ОШИБКА! Параметр self_contractor должен быть указан!")
+        
+        if not isinstance(self_contractor, contractor):
+            raise Exception("ОШИБКА! Параметр self_contractor - должен быть типом contractor!")
+        
+        result.__contractor = contractor
+        return result
 ```
 
 
