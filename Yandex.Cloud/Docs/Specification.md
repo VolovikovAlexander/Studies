@@ -52,7 +52,10 @@
 | [building](../Src/Models/Building.py) | Объект капитального строительства |
 | [contractor](../Src/Models/Contractor.py) | Застройщик / Подрядчик / Субподрядчик |
 | [executor](../Src/Models/Executor.py)  | Исполнитель   |
-| [act](../Src/Models/Act.py)  | Документ **Акт фиксации замечаний** |
+| [act](../Src/Models/Act.py)  | Документ **Акт проверки** |
+
+Так же, добавим [модульные тесты](../Tests/test_models.py).
+
 
 
 
