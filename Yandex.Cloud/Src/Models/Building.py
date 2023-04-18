@@ -1,0 +1,65 @@
+import uuid
+
+#
+# Класс модели с описанием параметров объекта капитального строительства
+#
+class building():
+    __description = ""
+    __name = ""
+    __guid = ""
+
+    
+    @property
+    def description(self):
+        # Свойство. Описание
+        return self.__description
+    
+    @description.setter
+    def description(self, value):
+        # Свойство. Описание
+        if not isinstance(value, str):
+            raise Exception("ОШИБКА! Параметр description - должен быть типом str!")
+
+        self.__description = value
+
+    
+    @property
+    def name(self):
+        # Свойство: Наименование
+        return self.__name
+    
+    def name(self, value):
+        # Свойство: Наименование
+        if not isinstance(value, str):
+            raise Exception("ОШИБКА! Параметр name - должен быть типом str!")
+        
+        if value == "":
+            raise Exception("ОШИБКА! Параметр name должен быть указан!")
+        
+        self.__name = value
+
+
+    @property
+    def guid(self):
+        # Свойство: Уникальный код объекта строительства
+        return self.__guid    
+    
+
+    def create( name):
+        # Фабричный метод. Создать объект типа building
+        result = building()
+        result.name = name
+        result.__guid = uuid.uuid4()
+
+        return result
+    
+
+
+
+    
+
+        
+        
+    
+
+
