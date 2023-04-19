@@ -44,10 +44,10 @@ class executor():
         result.__guid = uuid.uuid4()
 
         if _contractor is None:
-            raise Exception("ОШИБКА! Параметр self_contractor должен быть указан!")
+            raise Exception("ОШИБКА! Параметр _contractor должен быть указан!")
         
         if not isinstance(_contractor, contractor):
-            raise Exception("ОШИБКА! Параметр self_contractor - должен быть типом contractor!")
+            raise Exception("ОШИБКА! Параметр _contractor - должен быть типом contractor!")
         
         result.__contractor = _contractor
         return result
