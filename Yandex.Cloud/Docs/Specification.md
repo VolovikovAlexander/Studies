@@ -56,7 +56,26 @@
 
 Так же, добавим [модульные тесты](../Tests/test_models.py).
 
-### База данных
+### Проектирование сервисов
+
+> Подготовка
+Устанавливаем модуль [Flask](https://flask.palletsprojects.com/en/2.2.x/) для разработки WEB сервисов `REST API`
+```
+pip install Flask
+```
+
+Проверка
+```
+python3 -m flask --version
+Python 3.10.6
+Flask 2.2.3
+Werkzeug 2.2.3
+```
+
+Ссылки: https://habr.com/ru/companies/ivi/articles/542204/
+
+Теги: `python3-flasgger`,`python3-flask`
+
 
 
 

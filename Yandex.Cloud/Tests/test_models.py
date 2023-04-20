@@ -1,4 +1,3 @@
-
 import unittest
 from Src.Models.Building  import building
 from Src.Models.Contractor import contractor
