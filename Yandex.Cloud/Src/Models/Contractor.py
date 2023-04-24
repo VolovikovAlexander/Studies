@@ -1,9 +1,9 @@
 import uuid
 import json
 
-# 
+"""
 # Модель объекта - подрядчик / субподрядчик
-#
+"""
 class contractor():
     __parent = None
     __name = ""
@@ -13,12 +13,16 @@ class contractor():
 
     @property
     def description(self):
-        # Свойство. Описание
+        """
+        Свойство. Описание
+        """
         return self.__description
     
     @description.setter
     def description(self, value):
-        # Свойство. Описание
+        """
+        Свойство. Описание
+        """
         if not isinstance(value, str):
             raise Exception("ОШИБКА! Параметр description - должен быть типом str!")
 
@@ -27,11 +31,15 @@ class contractor():
     
     @property
     def name(self):
-        # Свойство: Наименование
+        """
+        Cвойство: Наименование
+        """
         return self.__name
     
     def name(self, value):
-        # Свойство: Наименование
+        """
+        Свойство: Наименование
+        """
         if not isinstance(value, str):
             raise Exception("ОШИБКА! Параметр name - должен быть типом str!")
         
@@ -43,17 +51,23 @@ class contractor():
 
     @property
     def guid(self):
-        # Свойство: Уникальный код объекта строительства
+        """
+        Свойство: Уникальный код объекта строительства
+        """
         return self.__guid    
     
 
     @property
     def parent(self):
-        # Свойство: Объект владелец
+        """
+        Свойство: Объект владелец
+        """
         return self.__parent
 
     def create( name, parent):
-        # Фабричный метод. Создать объект типа building
+        """
+        Фабричный метод. Создать объект типа building
+        """
         result = contractor()
         result.name = name
         result.__guid = uuid.uuid4()
@@ -69,6 +83,8 @@ class contractor():
 
 
     def toJSON(self):
-        # Сериализовать объект в Json
-        return json.dumps(self, default=lambda o: o.__dict__, 
+        """
+        Сериализовать объект в Json
+        """
+        return json.dumps(self, default=lambda x: x.__dict__, 
             sort_keys=True, indent=4)  

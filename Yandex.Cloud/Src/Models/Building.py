@@ -1,9 +1,11 @@
 import uuid
 import json
+from Src.Services.Repo import repo
+from Src.Models.Guid import guid
 
-#
+"""
 # Класс модели с описанием параметров объекта капитального строительства
-#
+"""
 class building():
     __description = ""
     __name = ""
@@ -12,12 +14,16 @@ class building():
     
     @property
     def description(self):
-        # Свойство. Описание
+        """
+        Свойство. Описание
+        """
         return self.__description
     
     @description.setter
     def description(self, value):
-        # Свойство. Описание
+        """
+        Свойство. Описание
+        """
         if not isinstance(value, str):
             raise Exception("ОШИБКА! Параметр description - должен быть типом str!")
 
@@ -26,11 +32,17 @@ class building():
     
     @property
     def name(self):
-        # Свойство: Наименование
+        """
+        Свойство: Наименование
+        """
         return self.__name
     
+
+    @name.setter
     def name(self, value):
-        # Свойство: Наименование
+        """
+        Свойство: Наименование
+        """
         if not isinstance(value, str):
             raise Exception("ОШИБКА! Параметр name - должен быть типом str!")
         
@@ -42,23 +54,29 @@ class building():
 
     @property
     def guid(self):
-        # Свойство: Уникальный код объекта строительства
+        """
+        Свойство: Уникальный код объекта строительства
+        """
         return self.__guid    
     
 
     def create( name):
-        # Фабричный метод. Создать объект типа building
+        """
+        Фабричный метод. Создать объект типа building
+        """
         result = building()
         result.name = name
-        result.__guid = uuid.uuid4()
+        result.__guid = guid()
 
         return result
 
 
     def toJSON(self):
-        # Сериализовать объект в Json
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=True, indent=4)    
+        """
+        Сериализовать объект в Json
+        """
+        items = repo.toDict(self)
+        return json.dumps(items, sort_keys = True, indent = 4)    
     
 
 

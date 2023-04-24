@@ -6,7 +6,9 @@ from Src.Models.Contractor import contractor
 from Src.Models.Executor import executor
 from Src.Models.Act import act
 
+#
 # Набор модульных тестов для проверки Reposity
+#
 class reposity_tests(unittest.TestCase):
 
 
@@ -20,8 +22,6 @@ class reposity_tests(unittest.TestCase):
 
         # Проверки
         assert len(result) > 0
-
-        
 
 
 

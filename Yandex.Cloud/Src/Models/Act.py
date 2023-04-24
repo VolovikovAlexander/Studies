@@ -8,9 +8,9 @@ import json
 import uuid
 
 
-#
+"""
 # Модель документа /Акт проверки/
-#
+"""
 class act():
     __amount = 0
     __executor = None
@@ -26,12 +26,16 @@ class act():
 
     @property
     def amount(self):
-        # Свойство: Сумма штрафа    
+        """
+        Свойство: Сумма штрафа    
+        """
         return self.__amount
     
     @amount.setter
     def amount(self, value):
-        # Свойство: Сумма штрафа    
+        """
+        Свойство: Сумма штрафа    
+        """
         if value is None:
             raise Exception("ОШИБКА! Параметр amount - не указан!")
         
@@ -39,7 +43,9 @@ class act():
 
     @property
     def progress(self):
-        # Свойство: Статус - прогресс
+        """
+        Свойство: Статус - прогресс
+        """
         return self.__progress
 
     @progress.setter
@@ -55,17 +61,23 @@ class act():
 
     @property
     def uid(self):
-        # Свойство. Уникальный номер документа
+        """
+        Свойство. Уникальный номер документа
+        """
         return self.__guid    
 
     @property
     def executor(self):
-        # Свойство: Исполнитель    
+        """
+        Свойство: Исполнитель    
+        """
         return self.__executor
 
     @executor.setter
     def executor(self, value):
-        # Свойство: Исполнитель    
+        """
+        Свойство: Исполнитель    
+        """
         if value is None:
             raise Exception("ОШИБКА! Параметр executor - не указан!")
         
@@ -75,18 +87,24 @@ class act():
 
     @property    
     def period(self):
-        # Дата и время создания документа
+        """
+        Дата и время создания документа
+        """
         return self.__period    
         
     @property
     def contractors(self):
-        # Свойство: Список застройщиков   
+        """
+        Свойство: Список застройщиков   
+        """
         items = list(self.__contractors)
         return items
         
 
     def create(_executor):
-        # Фабричный метод    
+        """
+        Фабричный метод    
+        """
         result = act()
         result.executor = _executor
         result.add(_executor.contraсtor)
@@ -96,7 +114,9 @@ class act():
         
 
     def add(self, _contractor):
-        # Добавить в документ исполнителей
+        """
+         Добавить в документ исполнителей
+        """
         if _contractor is None:
             return
         
@@ -108,7 +128,9 @@ class act():
 
 
     def toJSON(self):
-        # Сериализовать объект в Json
+        """
+        Сериализовать объект в Json
+        """
         items =  {}
         fields = ["period", "amount", "executor", "uid"]
         for field in fields:
@@ -120,7 +142,6 @@ class act():
                     items[field] = value.toJSON()
                 else:
                     items[field] = str(value)   
-
 
         return json.dumps(items)
         
