@@ -1,5 +1,5 @@
 import unittest
-from Src.Services.Reposity import reposity
+from Src.Services.Repo import reposity
 
 from Src.Models.Building  import building
 from Src.Models.Contractor import contractor

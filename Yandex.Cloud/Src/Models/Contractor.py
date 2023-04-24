@@ -1,4 +1,5 @@
 import uuid
+import json
 
 # 
 # Модель объекта - подрядчик / субподрядчик
@@ -67,3 +68,7 @@ class contractor():
 
 
 
+    def toJSON(self):
+        # Сериализовать объект в Json
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)  

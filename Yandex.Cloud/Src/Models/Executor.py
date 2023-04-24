@@ -1,4 +1,5 @@
 import uuid
+import json
 from Src.Models.Contractor import contractor
 
 #
@@ -53,3 +54,7 @@ class executor():
         return result
 
 
+    def toJSON(self):
+        # Сериализовать объект в Json
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)  

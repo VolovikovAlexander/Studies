@@ -1,7 +1,11 @@
 from Src.Models.Statuses import progress_status
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
+from Src.Models.Period import period
+
 from datetime import datetime
+import json
+import uuid
 
 
 #
@@ -13,10 +17,11 @@ class act():
     __contractors = {}
     __progress = None
     __period = None
+    __guid = ""
 
     def __init__(self):
         self.__progress = progress_status.start
-        self.__period = datetime.now()
+        self.__period = period()
 
 
     @property
@@ -32,12 +37,33 @@ class act():
         
         self.__amount = value
 
+    @property
+    def progress(self):
+        # Свойство: Статус - прогресс
+        return self.__progress
+
+    @progress.setter
+    def progress(self, value):
+        if value is None:
+            raise Exception("ОШИБКА! Параметр progress - не указан!")
+
+        if not isinstance(value, progress_status):
+            raise Exception("ОШИБКА! Параметр progress, некорректно указан!")    
+
+        self.__progress = value    
+
+
+    @property
+    def uid(self):
+        # Свойство. Уникальный номер документа
+        return self.__guid    
 
     @property
     def executor(self):
         # Свойство: Исполнитель    
         return self.__executor
 
+    @executor.setter
     def executor(self, value):
         # Свойство: Исполнитель    
         if value is None:
@@ -52,7 +78,7 @@ class act():
         # Дата и время создания документа
         return self.__period    
         
-
+    @property
     def contractors(self):
         # Свойство: Список застройщиков   
         items = list(self.__contractors)
@@ -64,6 +90,7 @@ class act():
         result = act()
         result.executor = _executor
         result.add(_executor.contraсtor)
+        result.__guid = uuid.uuid4()
 
         return result
         
@@ -79,9 +106,24 @@ class act():
         self.__contractors[_contractor.guid] = _contractor
         self.add(_contractor.parent)
 
-        
-        
 
+    def toJSON(self):
+        # Сериализовать объект в Json
+        items =  {}
+        fields = ["period", "amount", "executor", "uid"]
+        for field in fields:
+            value = self.__getattribute__(field)
+            if not value is None:
+                type_value = type(value)
+                yes_json = hasattr(type_value, "toJSON")
+                if yes_json:
+                    items[field] = value.toJSON()
+                else:
+                    items[field] = str(value)   
+
+
+        return json.dumps(items)
+        
 
 
 

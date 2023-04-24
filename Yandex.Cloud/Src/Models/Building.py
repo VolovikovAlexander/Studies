@@ -1,4 +1,5 @@
 import uuid
+import json
 
 #
 # Класс модели с описанием параметров объекта капитального строительства
@@ -52,6 +53,12 @@ class building():
         result.__guid = uuid.uuid4()
 
         return result
+
+
+    def toJSON(self):
+        # Сериализовать объект в Json
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)    
     
 
 

@@ -2,16 +2,21 @@ from Src.Models.Act import act
 from Src.Models.Executor import executor
 from Src.Models.Statuses import progress_status
 from Src.Models.Contractor import contractor
+from datetime import datetime
 
 #
 #  Класс репозиторий
 #
-class reposity():
+class repo():
     __acts = []
 
-
-    def acts(self):
+    def get_acts(self):
         # Получить список актов
+        return self.__acts
+
+
+    def load(self):
+        # Загрузить акты и базы данных
         self.__acts = []
 
         contractor_parent = contractor.create(name="test1", parent=None)
@@ -20,7 +25,15 @@ class reposity():
         current_act = act.create(_executor=executor_act)
 
         self.__acts.append(current_act)
-        return self.__acts
+
+
+    def create():
+        # Фабричный метод
+        main = repo()
+        main.load()
+
+        return main
+
 
 
 

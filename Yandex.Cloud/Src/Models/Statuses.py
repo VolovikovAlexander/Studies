@@ -1,3 +1,5 @@
+import json
+
 #
 # Класс с набором перечислений статусов для этапов
 #
@@ -13,3 +15,8 @@ class progress_status():
     # Все замечания устранены. Все проверки пройдены. Оплату можно проводить
     finish = 5
 
+
+    def toJSON(self):
+        # Сериализовать объект в Json
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)  
