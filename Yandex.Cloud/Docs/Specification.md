@@ -53,28 +53,20 @@
 | [contractor](../Src/Models/Contractor.py) | Застройщик / Подрядчик / Субподрядчик |
 | [executor](../Src/Models/Executor.py)  | Исполнитель   |
 | [act](../Src/Models/Act.py)  | Документ **Акт проверки** |
+| | |
+| [period](../Src/Models/Period.py) | Обвертка для работы с датой-временем |
+| [guid](../Src/Models/Guid.py) | Обвертка для работы с уникальным кодом |
+| | |
 
 Так же, добавим [модульные тесты](../Tests/test_models.py).
 
 ### Проектирование сервисов
 
 > Подготовка
-Устанавливаем модуль [Flask](https://flask.palletsprojects.com/en/2.2.x/) для разработки WEB сервисов `REST API`
+Устанавливаем модуль [connexion](https://connexion.readthedocs.io/en/latest/) для разработки WEB сервисов `REST API`
 ```
-pip install Flask
+pip install connexion[swagger-ui]
 ```
-
-Проверка
-```
-python3 -m flask --version
-Python 3.10.6
-Flask 2.2.3
-Werkzeug 2.2.3
-```
-
-Ссылки: https://habr.com/ru/companies/ivi/articles/542204/
-
-Теги: `python3-flasgger`,`python3-flask`
 
 
 
