@@ -102,7 +102,7 @@ def create(is_demo = False):
 Для работы с API создадим специальный [yaml файл](../Swagger.yaml) в котором создадим описание всех точек вызова. Для проверки, запускаем: http://127.0.0.1:8080/api/ui
 
 #### Задания
-1. Доработать yaml файл. Включить в него описания вызовов для остальных сервисов. Пример: https://swagger.io/docs/specification/basic-structure/
+1. Доработать [yaml файл](../Swagger.yaml). Включить в него описания вызовов для остальных сервисов. Пример: https://swagger.io/docs/specification/basic-structure/
 2. Найти ошибку в коде. При сериализации объекта [executor](../Src/Models/Executor.py) значения поля `contractor` выглядит следующим образом:
 ```json
  "contra\u0441tor": {
