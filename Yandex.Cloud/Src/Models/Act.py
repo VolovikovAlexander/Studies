@@ -84,6 +84,8 @@ class act():
         if not isinstance(value, executor):
             raise Exception("ОШИБКА! Параметр executor - должен быть типом executor!")
         
+        self.__executor = value
+        
 
     @property    
     def period(self):
@@ -97,8 +99,7 @@ class act():
         """
         Свойство: Список застройщиков   
         """
-        items = list(self.__contractors)
-        return items
+        return list(self.__contractors.values())
         
 
     def create(_executor):

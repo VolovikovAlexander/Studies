@@ -22,9 +22,18 @@ class helper():
                 value = object.__get__(source, source.__class__)
                 type_value = type(value)
                 yes_json = hasattr(type_value, "toJSON")
+                
                 if yes_json:
                     attributes[field] = value.toJSON()
                 else:
-                    attributes[field] = value    
+                    yes_list = isinstance(value, list)
+                    if yes_list:
+                        items = []
+                        for item in value:
+                            items.append(helper.toDict(item))
+
+                        attributes[field] = items
+                    else:                                  
+                        attributes[field] = value    
 
         return attributes        
