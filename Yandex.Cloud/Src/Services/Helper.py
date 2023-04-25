@@ -24,7 +24,11 @@ class helper():
                 yes_json = hasattr(type_value, "toJSON")
                 
                 if yes_json:
-                    attributes[field] = value.toJSON()
+                    result = helper.toDict(value)
+                    if len(result) == 0:
+                        attributes[field] = value.toJSON()
+                    else:    
+                        attributes[field] = helper.toDict(value)
                 else:
                     yes_list = isinstance(value, list)
                     if yes_list:

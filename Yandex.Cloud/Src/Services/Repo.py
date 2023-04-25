@@ -55,7 +55,7 @@ class repo():
 
 
     # Статические методы
-    
+
     def create(is_demo = False):
         """
         Фабричный метод
@@ -63,8 +63,8 @@ class repo():
         main = repo()
         if is_demo == True:
             main.load_demo()
-        #else:    
-            #main.load()
+        else:    
+            main.load()
 
         return main
 
