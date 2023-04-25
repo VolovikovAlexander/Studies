@@ -16,15 +16,15 @@ class helper():
         
         attributes = {}
         fields = list(filter(lambda x: not x.startswith("_"), dir(source.__class__)))
-        for name in fields:
-            object = getattr(source.__class__, name)
+        for field in fields:
+            object = getattr(source.__class__, field)
             if isinstance(object, property):
                 value = object.__get__(source, source.__class__)
                 type_value = type(value)
                 yes_json = hasattr(type_value, "toJSON")
                 if yes_json:
-                    attributes[name] = value.toJSON()
+                    attributes[field] = value.toJSON()
                 else:
-                    attributes[name] = value    
+                    attributes[field] = value    
 
         return attributes        

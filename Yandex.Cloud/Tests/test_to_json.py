@@ -3,6 +3,7 @@ from Src.Models.Period import period
 from Src.Models.Building import building
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
+from Src.Models.Act import act
 
 import unittest
 import json
@@ -55,6 +56,24 @@ class json_convert_tests(unittest.TestCase):
         # Действие
         result = object.toJSON()
 
+        # Проверки
+        assert result is not None
+        act = json.loads(result)
+        assert act is not None
+        print(result)
+        print(act)
+
+    #
+    # Проверить конвертацию в Json объекта типа contractor
+    #
+    def test_contractor_to_json(self):
+        # Подготовка
+        _parent = contractor.create(name="test", parent=None)
+        object = contractor.create(name="test", parent=_parent)
+
+        # Действие
+        result = object.toJSON()
+
          # Проверки
         assert result is not None
         act = json.loads(result)
@@ -63,7 +82,27 @@ class json_convert_tests(unittest.TestCase):
         print(act)
 
 
+    #
+    # Порверить конвертацию в Json объекта типа act
+    #
+    def test_act_to_json(self):
+        # Подготовка
+        contractor_parent = contractor.create(name="test1", parent=None)
+        contractor_act = contractor.create(name="test2", parent=contractor_parent)
+        executor_act = executor.create(name="test3", _contractor=contractor_act)
+        object = act.create(_executor=executor_act)
 
+
+        # Действие
+        result = object.toJSON()
+
+         # Проверки
+        assert result is not None
+        restore = json.loads(result)
+        assert restore is not None
+
+        print(result)
+        print(restore)
 
 
 if __name__ == '__main__':

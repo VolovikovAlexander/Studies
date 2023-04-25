@@ -39,6 +39,7 @@ class contractor():
         """
         return self.__name
     
+    @name.setter
     def name(self, value):
         """
         Свойство: Наименование

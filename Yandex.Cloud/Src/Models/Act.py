@@ -2,10 +2,10 @@ from Src.Models.Statuses import progress_status
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
 from Src.Models.Period import period
+from Src.Services.Helper import helper
+from Src.Models.Guid import guid
 
-from datetime import datetime
 import json
-import uuid
 
 
 """
@@ -108,7 +108,8 @@ class act():
         result = act()
         result.executor = _executor
         result.add(_executor.contraсtor)
-        result.__guid = uuid.uuid4()
+
+        result.__guid = guid()
 
         return result
         
@@ -131,21 +132,10 @@ class act():
         """
         Сериализовать объект в Json
         """
-        items =  {}
-        fields = ["period", "amount", "executor", "uid"]
-        for field in fields:
-            value = self.__getattribute__(field)
-            if not value is None:
-                type_value = type(value)
-                yes_json = hasattr(type_value, "toJSON")
-                if yes_json:
-                    items[field] = value.toJSON()
-                else:
-                    items[field] = str(value)   
-
-        return json.dumps(items)
-        
-
+        items = helper.toDict(self)
+        return json.dumps(items, sort_keys = True, indent = 4)    
+    
+    
 
 
 
