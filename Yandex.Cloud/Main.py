@@ -30,17 +30,13 @@ def getActs():
     Получить список всех актов
     """
     items = repo.get_acts()
-    if not any(items):
-        # Возвращаем 204
-        return 'Not Found', 204, {'x-error': 'not found'}
-    else:
-        result = []
-        for item in items:
-            result.append(helper.toDict(item))
+    result = []
+    for item in items:
+        result.append(helper.toDict(item))
 
-        # Возвращает 200
-        result = json.dumps(result, sort_keys = True, indent = 4)  
-        return '{"acts":' + result + '}'
+    # Возвращает 200
+    result = json.dumps(result, sort_keys = True, indent = 4)  
+    return '{"acts":' + result + '}'
 
 
 if __name__ == '__main__':

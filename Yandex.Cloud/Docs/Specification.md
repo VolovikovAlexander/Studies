@@ -68,6 +68,36 @@
 pip install connexion[swagger-ui]
 ```
 
+Добавим вызовы [RestApi](../Main.py) с свяжем их со специальных классом - [репозиторий](../Src/Services/Repo.py).
+
+| Url (endpoint)   | Описание                    |
+|------------------|-----------------------------|
+| /api/acts/       | GET, получить список всех актов |
+| /api/acts/uid    | GET, получить карточку конкретного акта по его коду  |
+| /api/executors/   | GET, получить список всех исполнителей |
+| /api/executors/uid | GET, получить карточку конкретного исполнителя по его коду |
+| /api/contractors/ | GET, получить список всех застройщиков |
+| /api/contractors/uid / GET, получить карточку конкретного застройщика по его коду |
+| | | 
+
+
+Так же, добавим [модульные тесты](../Tests/test_reposity.py) и тесты на [конвертацию данных](../Tests/test_to_json.py) в формат json
+Для проверки работы RestApi  в класс репозиторий добавим демо данные. Удобней это сделать при помощи фабричного метода.
+
+```python
+  	def create(is_demo = False):
+        """
+        Фабричный метод
+        """
+        main = repo()
+        if is_demo == True:
+            main.load_demo()
+        else:    
+            main.load()
+
+        return main
+```
+
 
 
 
