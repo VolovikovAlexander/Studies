@@ -1,7 +1,7 @@
-import uuid
 import json
-from Src.Services.Repo import repo
+
 from Src.Models.Guid import guid
+from Src.Services.Helper import helper
 
 """
 # Класс модели с описанием параметров объекта капитального строительства
@@ -75,7 +75,7 @@ class building():
         """
         Сериализовать объект в Json
         """
-        items = repo.toDict(self)
+        items = helper.toDict(self)
         return json.dumps(items, sort_keys = True, indent = 4)    
     
 

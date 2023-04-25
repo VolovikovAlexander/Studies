@@ -1,5 +1,8 @@
-import uuid
 import json
+
+from Src.Services.Helper import helper
+from Src.Models.Guid import guid
+
 
 """
 # Модель объекта - подрядчик / субподрядчик
@@ -70,7 +73,7 @@ class contractor():
         """
         result = contractor()
         result.name = name
-        result.__guid = uuid.uuid4()
+        result.__guid = guid()
 
         if not parent is None:
             if not isinstance(parent, contractor):
@@ -86,5 +89,5 @@ class contractor():
         """
         Сериализовать объект в Json
         """
-        return json.dumps(self, default=lambda x: x.__dict__, 
-            sort_keys=True, indent=4)  
+        items = helper.toDict(self)
+        return json.dumps(items, sort_keys = True, indent = 4)  

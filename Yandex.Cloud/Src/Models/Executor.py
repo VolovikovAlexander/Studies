@@ -1,6 +1,8 @@
-import uuid
 import json
+
 from Src.Models.Contractor import contractor
+from Src.Services.Helper import helper
+from Src.Models.Guid import guid
 
 """
 # Класс модель - исполнитель
@@ -52,7 +54,7 @@ class executor():
         """
         result = executor()
         result.name = name
-        result.__guid = uuid.uuid4()
+        result.__guid = guid()
 
         if _contractor is None:
             raise Exception("ОШИБКА! Параметр _contractor должен быть указан!")
@@ -68,5 +70,5 @@ class executor():
         """
         Сериализовать объект в Json
         """
-        return json.dumps(self, default=lambda x: x.__dict__, 
-            sort_keys=True, indent=4)  
+        items = helper.toDict(self)
+        return json.dumps(items, sort_keys = True, indent = 4)    
