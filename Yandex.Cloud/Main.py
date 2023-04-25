@@ -45,7 +45,7 @@ def getActs():
 # Застройщики
 
 @api.route("/api/contractors/<uid>")
-def getAct(uid):
+def getContracts(uid):
     """
     Получить карточку застройщика
     """
@@ -60,7 +60,7 @@ def getAct(uid):
 
 
 @api.route("/api/contractors")
-def getActs():
+def getContract():
     """
     Получить список всех застройщиков
     """
@@ -78,7 +78,7 @@ def getActs():
 # Исполнители
 
 @api.route("/api/executors/<uid>")
-def getAct(uid):
+def getExecutors(uid):
     """
     Получить карточку исполнителя
     """
@@ -93,7 +93,7 @@ def getAct(uid):
 
 
 @api.route("/api/executors")
-def getActs():
+def getExecutor():
     """
     Получить список всех исполнителей
     """
@@ -111,7 +111,7 @@ def getActs():
 # Объекты капитального строительства
 
 @api.route("/api/building/<uid>")
-def getAct(uid):
+def getBuildings(uid):
     """
     Получить карточку ОКС
     """
@@ -126,7 +126,7 @@ def getAct(uid):
 
 
 @api.route("/api/building")
-def getActs():
+def getBuilding():
     """
     Получить список всех ОКС
     """
