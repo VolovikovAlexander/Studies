@@ -6,12 +6,13 @@ import json
 
 
 repo  =  repo.create(is_demo=True)
-api = connexion.App(__name__, specification_dir='./')
+options = {"swagger_ui": True}
+api = connexion.FlaskApp(__name__, specification_dir='./', options=options)
 
 # =======================================================
 # Акты
 
-@api.route("/api/acts/<uid>")
+@api.route("/api/acts/<uid>", methods=['GET'])
 def getAct(uid):
     """
     Получить карточку акта
@@ -26,7 +27,7 @@ def getAct(uid):
 
 
 
-@api.route("/api/acts")
+@api.route("/api/acts", methods=['GET'])
 def getActs():
     """
     Получить список всех актов
@@ -44,7 +45,7 @@ def getActs():
 # =======================================================
 # Застройщики
 
-@api.route("/api/contractors/<uid>")
+@api.route("/api/contractors/<uid>", methods=['GET'])
 def getContracts(uid):
     """
     Получить карточку застройщика
@@ -59,7 +60,7 @@ def getContracts(uid):
 
 
 
-@api.route("/api/contractors")
+@api.route("/api/contractors", methods=['GET'])
 def getContract():
     """
     Получить список всех застройщиков
@@ -77,7 +78,7 @@ def getContract():
 # =======================================================
 # Исполнители
 
-@api.route("/api/executors/<uid>")
+@api.route("/api/executors/<uid>", methods=['GET'])
 def getExecutors(uid):
     """
     Получить карточку исполнителя
@@ -92,7 +93,7 @@ def getExecutors(uid):
 
 
 
-@api.route("/api/executors")
+@api.route("/api/executors", methods=['GET'])
 def getExecutor():
     """
     Получить список всех исполнителей
@@ -110,7 +111,7 @@ def getExecutor():
 # =======================================================
 # Объекты капитального строительства
 
-@api.route("/api/building/<uid>")
+@api.route("/api/building/<uid>", methods=['GET'])
 def getBuildings(uid):
     """
     Получить карточку ОКС
@@ -125,7 +126,7 @@ def getBuildings(uid):
 
 
 
-@api.route("/api/building")
+@api.route("/api/building", methods=['GET'])
 def getBuilding():
     """
     Получить список всех ОКС
@@ -142,6 +143,8 @@ def getBuilding():
 
 
 if __name__ == '__main__':
-    api.run(port=8080)
+    api.add_api("Swagger.yaml")
+    api.run(debug=True, port=8080)
+    
 
 

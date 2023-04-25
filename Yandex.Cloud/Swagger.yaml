@@ -1,0 +1,25 @@
+swagger: '2.0'
+info:
+  description: Набор RestAPI сервисов для подключения к системе мониторинга состояния строительства объектов капитального строительства (ОКС)
+  version: "1.0.0"
+  title: RestAPI
+consumes:
+  - application/json
+produces:
+  - application/json  
+basePath: "/api"  
+paths:
+    /acts:
+      get:
+        summary: Получить список актов
+        operationId: Main.getActs
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                acts:
+                  type: array
+                  items:
+                    type: string
