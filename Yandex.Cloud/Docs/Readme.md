@@ -116,7 +116,34 @@ def create(is_demo = False):
  5. Доработать модель [акта](../Src/Models/Act.py). Добавить свойство - объект капитального строительства (ОКС), [building](../Src/Models/Building.py)
  
 
-### Проектирование аналитических сервисов
+### Проектирование базы данных
+
+Подключение:
+```
+clickhouse-client --host rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net                   --secure                   --user user                   --database db                   --port 9440                   --ask-password
+```
+
+При удачном подключении:
+```
+rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net :)
+```
+
+Таблицы:
+| Наименование                 | Описание                | SQL запрос                     |
+|------------------------------|-------------------------|--------------------------------|
+| `buildings`                  | Таблица всех объектов капитального строительства (ОКС) | `create table buildings(id UUID, name String, description String, primary key[id])` | 
+| `statuses`                   | Таблица статусов | `create table statuses(id UUID, name String, description String, primary key[id])` |
+| `executors`                  | Таблица исполнителей | `create table executors(id UUID, name String, description String, primary key[id])` |
+| `contractors`                | Таблица застройщиков | `create table contractors(id UUID, parent_id UUID, name String,description String, primary key[id])` |
+| `acts`                       | Таблица с основной информацией по актам | `create table acts(id UUID, building_id UUID not Null, executor_id UUID,  period DateTime not null, primary key[id])` |
+| `acts_contractor_links`      | Таблица связи акта с застройщиками | `create table acts_contractors_links(id UUID, period DateTime not null, contractor_id UUID,  primary key[id])` |
+| `acts_status_links`          | Таблица связи акта со статусом | `create table acts_status_links(id UUID, period DateTime not null, status_id UUID, description String, executor_id UUID,  primary key[id])` |
+| | | |
+
+
+
+
+
 
 
 
