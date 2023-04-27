@@ -72,10 +72,19 @@ class db_proxy():
         try:
             rows = self.__client.execute(query = sql,  with_column_types=True)
         except Exception as ex:
-            self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]
+            self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + "): " + ex.args[0]
             return []
         
+        return self.__prepare_rows(map_type, rows)
+        
 
+    def __prepare_rows(self, map_type, rows):
+        """
+        Провести обработку полученных данных при выполнении SQL запроса от ClickHouse
+        """
+        if rows is None:
+            raise Exception("Некорректно передан параметр rows!")
+        
         try:
             # Формируем словарь: поле / значение
             data = []
@@ -106,7 +115,7 @@ class db_proxy():
             return self.__data
 
         except Exception as ex:
-            self.__error_text = "Ошибка при обработке данных от SQL запроса (" + sql + ")  " + ex.args[0]
+            self.__error_text = "Ошибка при обработке данных от SQL запроса: " + ex.args[0]
             return []
 
 
