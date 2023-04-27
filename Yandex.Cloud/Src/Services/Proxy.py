@@ -1,5 +1,4 @@
 from clickhouse_driver import Client
-import collections
 
 
 """
@@ -27,12 +26,11 @@ class db_proxy():
             self.__client = None
             return None
 
-
     
     @property
     def error_text(self):
         """
-        Получить сообщение об ошибке
+        Свойство: Получить сообщение об ошибке
         """
         return self.__error_text
     
@@ -40,9 +38,16 @@ class db_proxy():
     @property
     def is_error(self):
         """
-        Получить флаг о последнем состоянии
+        Свойство: Получить флаг о последнем состоянии
         """
         return not self.__error_text == "" 
+
+    @property    
+    def get_last_data(self):
+        """
+        Свойство: Получить данные по последней успешной выборке данных
+        """
+        return self.__data
     
 
     def get_rows(self, sql, map_type):
@@ -67,6 +72,7 @@ class db_proxy():
             rows = self.__client.execute(query = sql,  with_column_types=True)
 
             # Формируем словарь: поле / значение
+            data = []
             columns = list(map(lambda x: x[0], rows[-1]))
             for row in rows[0]:
                 dict = {}
@@ -75,11 +81,11 @@ class db_proxy():
                     dict[column] = str(row[column_index])
                     column_index += 1
 
-                self.__data.append(dict)
+                data.append(dict)
 
             # Сконвертируем словарь в массив типа map_type
-            objects = []
-            for item in self.__data:
+            self.__data = []
+            for item in data:
                 object = map_type()
                 is_yes_data = False
                 for column in columns:
@@ -89,9 +95,9 @@ class db_proxy():
                         is_yes_data = True
                     
                 if is_yes_data == True:
-                    objects.append(object)
+                    self.__data.append(object)
 
-            return objects
+            return self.__data
 
         except Exception as ex:
             self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]

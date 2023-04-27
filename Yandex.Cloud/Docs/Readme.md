@@ -174,8 +174,10 @@ insert into statuses(id, name, code, description) select generateUUIDv4(),'finis
 
 1. Установим [пакет](https://readthedocs.org/projects/clickhouse-driver/downloads/pdf/latest/) 
 ```
-pip install clickhouse-driver[lz4]
+pip install clickhouse-driver
 ```
+
+2. Создадим [отдельный класс](../Src/Services/Proxy.py) для работы с базой данных `proxy`. Так же, добавим для проверки [модульный тест](../Tests/test_proxy.py)
 
 
 
