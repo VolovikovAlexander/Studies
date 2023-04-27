@@ -52,7 +52,7 @@ class db_proxy():
 
     def get_rows(self, sql, map_type):
         """
-        Выполнить SQL запрос и сформировать массив из структур map_type
+        Выполнить SQL запрос и сформировать массив из структур <map_type>.
         """
 
         if sql == "":
@@ -68,9 +68,15 @@ class db_proxy():
             return
         
         self.__error_text = ""
+
         try:
             rows = self.__client.execute(query = sql,  with_column_types=True)
+        except Exception as ex:
+            self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]
+            return []
+        
 
+        try:
             # Формируем словарь: поле / значение
             data = []
             columns = list(map(lambda x: x[0], rows[-1]))
@@ -100,7 +106,8 @@ class db_proxy():
             return self.__data
 
         except Exception as ex:
-            self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]
+            self.__error_text = "Ошибка при обработке данных от SQL запроса (" + sql + ")  " + ex.args[0]
+            return []
 
 
 
