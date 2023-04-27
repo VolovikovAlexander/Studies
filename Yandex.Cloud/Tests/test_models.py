@@ -70,7 +70,7 @@ class models_tests(unittest.TestCase):
 
         # Проверки
         assert result is not None
-        assert len(result.contractors()) == 2
+        assert len(result.contractors) == 2
 
 
 

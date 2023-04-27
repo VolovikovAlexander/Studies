@@ -166,9 +166,18 @@ insert into statuses(id, name, code, description) select generateUUIDv4(),'failu
 insert into statuses(id, name, code, description) select generateUUIDv4(),'finish',5, 'Все замечания устранены. Все проверки пройдены. Оплату можно проводить';
 ```
 
-#### Задания
+##### Задания
 1. Доработать таблицу `statuses`. Исключить возможность дублирования записей по полям: **name**,**code**. Сделать в виде SQL скрипта в котором сразу же включить проверку.
 2. Изенить таблицу `acts_status_links`. Сделать связь со статусом не по **UUID** , а по коду **Int**. Сделать в виде SQL скрипта.
+
+#### Генерация данных
+
+1. Установим [пакет](https://readthedocs.org/projects/clickhouse-driver/downloads/pdf/latest/) 
+```
+pip install clickhouse-driver[lz4]
+```
+
+
 
 
 

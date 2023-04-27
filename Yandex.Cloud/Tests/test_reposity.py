@@ -1,5 +1,5 @@
 import unittest
-from Src.Services.Repo import reposity
+from Src.Services.Repo import repo
 
 from Src.Models.Building  import building
 from Src.Models.Contractor import contractor
@@ -15,10 +15,11 @@ class reposity_tests(unittest.TestCase):
     # Проверить получение актов
     def test_get_acts(self):
         # Подготовка
-        repo = reposity()
+        _repo = repo.create(is_demo=True)
+        
 
         # Действие
-        result = repo.acts()
+        result = _repo.get_acts()
 
         # Проверки
         assert len(result) > 0

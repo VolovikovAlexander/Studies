@@ -1,6 +1,7 @@
 from Src.Models.Act import act
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
+from Src.Services.Proxy import db_proxy
 
 """
 #  Класс репозиторий
@@ -10,6 +11,7 @@ class repo():
     __buildings = []
     __executors = []
     __contractors = []
+    __proxy = None
 
     # Методы данных    
 
@@ -52,6 +54,15 @@ class repo():
         current_act = act.create(_executor=executor_act)
 
         self.__acts.append(current_act)
+
+
+    def load(self):
+        """
+        Подключиться к базе данных
+        """
+        self.__proxy = db_proxy()
+        self.__proxy.open()
+
 
 
     # Статические методы
