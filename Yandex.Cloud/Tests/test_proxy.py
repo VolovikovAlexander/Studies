@@ -13,7 +13,7 @@ class proxy_tests(unittest.TestCase):
         proxy = db_proxy()
 
         # Действие
-        proxy.open()
+        proxy.create()
 
         # Проверки
         print(proxy.error_text)
@@ -26,7 +26,7 @@ class proxy_tests(unittest.TestCase):
     def test_get_rows_statuses(self):
         # Подготовка
         proxy = db_proxy()
-        proxy.open()
+        proxy.create()
         _map_type = type(progress_status)
 
         # Действие

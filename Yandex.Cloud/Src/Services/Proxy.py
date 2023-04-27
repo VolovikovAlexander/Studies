@@ -8,20 +8,23 @@ class db_proxy():
     __client = None
     __is_open = False
     __error_text = ""
+    __data = []
 
-    def open(self):
+    def create(self):
         """
-        Открыть новое подключение к базе данных
+        Создать новое подключение
         """
         self.__error_text = ""
         if self.__is_open == True:
-            return
+            return self.__client
         
         try:
-            self.__client = Client(host='rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net', user='user', password='useruser', port = 9440, database = "dbDashboard")
+            self.__client = Client(host='rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net', user='user', password='useruser', port = 9440, database = "dbDashboard", secure = True)
+            return self.__client
         except Exception as ex:
             self.__error_text = "Невозможно открыть подключение к базе данных! " + ex.args[0]
             self.__client = None
+            return None
 
 
     
@@ -60,9 +63,21 @@ class db_proxy():
         
         self.__error_text = ""
         try:
-            rows = self.__client.execute(query = sql)
-            for row in rows:
-                test = ""
+            rows = self.__client.execute(query = sql,  with_column_types=True)
+
+            # Формируем словарь: поле / значение
+            columns = list(map(lambda x: x[0], rows[-1]))
+            for row in rows[0]:
+                dict = {}
+                column_index = 0
+                for column in columns:
+                    dict[column] = row[column_index]
+                    column_index += 1
+
+                self.__data.append(dict)
+
+            # Сконвертируем словарь в массив указанных структур
+
 
         except Exception as ex:
             self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]
