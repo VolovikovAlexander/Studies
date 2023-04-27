@@ -21,7 +21,6 @@ class db_proxy():
             self.__client = Client(host='rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net', user='user', password='useruser', port = 9440, database = "dbDashboard")
         except Exception as ex:
             self.__error_text = "Невозможно открыть подключение к базе данных! " + ex.args[0]
-        finally:
             self.__client = None
 
 
@@ -61,7 +60,10 @@ class db_proxy():
         
         self.__error_text = ""
         try:
-            rows = Client.execute(query = sql)
+            rows = self.__client.execute(query = sql)
+            for row in rows:
+                test = ""
+
         except Exception as ex:
             self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]
 
