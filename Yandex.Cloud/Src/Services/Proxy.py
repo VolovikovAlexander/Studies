@@ -1,4 +1,5 @@
 from clickhouse_driver import Client
+import collections
 
 
 """
@@ -71,13 +72,26 @@ class db_proxy():
                 dict = {}
                 column_index = 0
                 for column in columns:
-                    dict[column] = row[column_index]
+                    dict[column] = str(row[column_index])
                     column_index += 1
 
                 self.__data.append(dict)
 
-            # Сконвертируем словарь в массив указанных структур
+            # Сконвертируем словарь в массив типа map_type
+            objects = []
+            for item in self.__data:
+                object = map_type()
+                is_yes_data = False
+                for column in columns:
+                    yes_field = hasattr(map_type, column)
+                    if yes_field:
+                        setattr(object, column, item.value)
+                        is_yes_data = True
+                    
+                if is_yes_data == True:
+                    objects.append(object)
 
+            return objects
 
         except Exception as ex:
             self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + ")  " + ex.args[0]

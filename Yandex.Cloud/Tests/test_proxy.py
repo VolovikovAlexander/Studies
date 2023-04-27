@@ -27,10 +27,9 @@ class proxy_tests(unittest.TestCase):
         # Подготовка
         proxy = db_proxy()
         proxy.create()
-        _map_type = type(progress_status)
 
         # Действие
-        data = proxy.get_rows("select * from statuses", _map_type)
+        data = proxy.get_rows("select * from buildings", progress_status)
 
         # Проверки
         print(proxy.error_text)
