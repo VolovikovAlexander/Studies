@@ -132,7 +132,7 @@ rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net :)
 | Наименование                 | Описание                | SQL запрос                     |
 |------------------------------|-------------------------|--------------------------------|
 | `buildings`                  | Таблица всех объектов капитального строительства (ОКС) | `create table buildings(id String, name String, description String, primary key[id]) engine = MergeTree;` | 
-| `statuses`                   | Таблица статусов | `create table statuses(id UUID, name String, description String, primary key[id]) engine = MergeTree;` |
+| `statuses`                   | Таблица статусов | `create table statuses(id UUID, code Int, name String, description String, primary key[id]) engine = MergeTree;` |
 | `executors`                  | Таблица исполнителей | `create table executors(id UUID, name String, description String, primary key[id]) engine = MergeTree;` |
 | `contractors`                | Таблица застройщиков | `create table contractors(id UUID, parent_id UUID, name String,description String, primary key[id]) engine = MergeTree;` |
 | `acts`                       | Таблица с основной информацией по актам | `create table acts(id UUID, building_id UUID not Null, executor_id UUID,  period DateTime not null, amount  Float32 default(0), primary key[id]) engine = MergeTree;` |
