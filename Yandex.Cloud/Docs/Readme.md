@@ -117,6 +117,7 @@ def create(is_demo = False):
  
 
 ### Проектирование базы данных
+#### ClickHouse
 
 Подключение:
 ```
@@ -155,6 +156,19 @@ show tables;
 │ statuses               │
 └────────────────────────┘
 ```
+
+Добавим статусы:
+```sql
+insert into statuses(id, name, code, description) select generateUUIDv4(),'preparation',1, 'Все документы для начала строительства / этапа собраны и проверены. Разрешения выданы';
+insert into statuses(id, name, code, description) select generateUUIDv4(),'start',2, 'На объекте начаты строительные работы. Представители субподрядчика прибыли на объект';
+insert into statuses(id, name, code, description) select generateUUIDv4(),'passing',3, 'Очередная проверка пройдена без замечаний со стороны контроллирующих органов';
+insert into statuses(id, name, code, description) select generateUUIDv4(),'failure',4, 'Очередная проверка пройдена с замечаниями. Необходимо устранить все замечания';
+insert into statuses(id, name, code, description) select generateUUIDv4(),'finish',5, 'Все замечания устранены. Все проверки пройдены. Оплату можно проводить';
+```
+
+#### Задания
+1. Доработать таблицу `statuses`. Исключить возможность дублирования записей по полям: **name**,**code**. Сделать в виде SQL скрипта в котором сразу же включить проверку.
+2. Изенить таблицу `acts_status_links`. Сделать связь со статусом не по **UUID** , а по коду **Int**. Сделать в виде SQL скрипта.
 
 
 
