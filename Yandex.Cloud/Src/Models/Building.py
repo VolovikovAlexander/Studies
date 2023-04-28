@@ -53,11 +53,21 @@ class building():
 
 
     @property
-    def guid(self):
+    def id(self):
         """
         Свойство: Уникальный код объекта строительства
         """
         return self.__guid    
+    
+    @id.setter
+    def id(self, value):
+        """
+        Свойство: Уникальный код объекта строительства
+        """
+        if value is None:
+            raise Exception("Некорректно передан параметр id!")
+        
+        self._guid = value
     
 
     def create( name):
@@ -66,7 +76,7 @@ class building():
         """
         result = building()
         result.name = name
-        result.__guid = guid()
+        result.__guid = str(guid().toJSON)
 
         return result
 

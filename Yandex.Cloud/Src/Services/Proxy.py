@@ -106,7 +106,7 @@ class db_proxy():
                 for column in columns:
                     yes_field = hasattr(map_type, column)
                     if yes_field:
-                        setattr(object, column, item.value)
+                        setattr(object, column, item[column])
                         is_yes_data = True
                     
                 if is_yes_data == True:
@@ -118,6 +118,27 @@ class db_proxy():
             self.__error_text = "Ошибка при обработке данных от SQL запроса: " + ex.args[0]
             return []
 
+
+    def execute(self, sql, params = None):
+        """
+        Выполнить произвольный SQL запрос
+        """
+        if sql == "":
+            raise Exception("Некорректно передан параметр sql!")
+        
+        if self.__client is None:
+            self.create()
+
+        if self.is_error:
+            raise Exception("Невозможно выполнить SQL запрос. " + self.__error_text)
+        
+        try:
+            self.__client.execute(sql, params)
+            return True
+        except Exception as ex:
+            self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + "): " + ex.args[0]            
+            return False
+        
 
 
         

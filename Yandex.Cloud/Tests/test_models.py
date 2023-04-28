@@ -18,7 +18,7 @@ class models_tests(unittest.TestCase):
 
         # Проверки
         assert result is not None
-        print(result.guid)
+        print(result.id)
 
 
     # Проверить создание объекта типа contractor
