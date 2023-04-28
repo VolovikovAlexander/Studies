@@ -9,6 +9,7 @@ from Src.Models.Guid import guid
 """
 class executor():
     __name = ""
+    __description = ""
     __guid = ""
     __contractor = None
 
@@ -35,11 +36,43 @@ class executor():
 
 
     @property
-    def guid(self):
+    def description(self):
+        """
+        Свойство: Полное наименование исполнителя
+        """
+        return self.__description
+    
+    @description.setter
+    def description(self, value):
+        """
+        Свойство: Наименование
+        """
+        if not isinstance(value, str):
+            raise Exception("ОШИБКА! Параметр description - должен быть типом str!")
+        
+        if value == "":
+            raise Exception("ОШИБКА! Параметр description должен быть указан!")
+        
+        self.__description = value
+
+
+
+    @property
+    def id(self):
         """
         Свойство: Уникальный код объекта строительства
         """
         return self.__guid    
+
+    @id.setter    
+    def id(self, value):
+        """
+        Свойство: Уникальный код объекта строительства
+        """
+        if value is None:
+            raise Exception("ОШИБКА! Некорректно передан параметр id!")
+        
+        self.__guid = value
     
     @property
     def contraсtor(self):
@@ -73,3 +106,10 @@ class executor():
         """
         items = helper.toDict(self)
         return json.dumps(items, sort_keys = True, indent = 4)    
+    
+    def __str__(self):
+        """
+        Сформировать SQL запрос на вставку данных
+        """
+        sql = "insert into executors(id, name, description, parent_id) values('%s', '%s', '%s', %s)" % (self.id, self.name, self.description,  self.contraсtor.id )
+        return sql

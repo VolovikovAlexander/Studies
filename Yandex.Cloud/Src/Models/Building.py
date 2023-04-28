@@ -76,7 +76,7 @@ class building():
         """
         result = building()
         result.name = name
-        result.__guid = str(guid().toJSON)
+        result.__guid = guid().toJSON()
 
         return result
 
@@ -86,7 +86,17 @@ class building():
         Сериализовать объект в Json
         """
         items = helper.toDict(self)
-        return json.dumps(items, sort_keys = True, indent = 4)    
+        return json.dumps(items, sort_keys = True, indent = 4)   
+
+
+    def __str__(self):
+        """
+        Сформировать SQL запрос на вставку данных
+        """
+        sql = "insert into buildings (id, name, description) values ('%s','%s','%s')" % (self.id, self.name, self.description)
+        return sql
+
+        
     
 
 

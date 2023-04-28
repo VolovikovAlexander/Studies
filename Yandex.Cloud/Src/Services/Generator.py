@@ -1,7 +1,7 @@
 from Src.Services.Proxy import db_proxy
 
 """
-Класс для генерации тестовх данных 
+Класс для генерации тестовых данных 
 """
 class generator():
     __proxy = None
