@@ -54,11 +54,21 @@ class contractor():
 
 
     @property
-    def guid(self):
+    def id(self):
         """
-        Свойство: Уникальный код объекта строительства
+        Свойство: Уникальный код
         """
         return self.__guid    
+    
+    @id.setter
+    def id(self, value):
+        """
+        Свойство: Уникальный код 
+        """
+        if value is None:
+            raise Exception("ОШИБКА! Некорректно передан параметр id!")
+        
+        self.__guid = value
     
 
     @property
@@ -92,3 +102,10 @@ class contractor():
         """
         items = helper.toDict(self)
         return json.dumps(items, sort_keys = True, indent = 4)  
+    
+    def __str__(self):
+        """
+        Сформировать SQL запрос на вставку данных
+        """
+        sql = "insert into contractors (id, name, description) values ('%s','%s','%s')" % (self.id, self.name, self.description)
+        return sql

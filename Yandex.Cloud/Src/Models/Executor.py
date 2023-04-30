@@ -60,14 +60,14 @@ class executor():
     @property
     def id(self):
         """
-        Свойство: Уникальный код объекта строительства
+        Свойство: Уникальный код 
         """
         return self.__guid    
 
     @id.setter    
     def id(self, value):
         """
-        Свойство: Уникальный код объекта строительства
+        Свойство: Уникальный код 
         """
         if value is None:
             raise Exception("ОШИБКА! Некорректно передан параметр id!")

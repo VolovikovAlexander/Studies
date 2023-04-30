@@ -134,7 +134,9 @@ class act():
         Сериализовать объект в Json
         """
         items = helper.toDict(self)
-        return json.dumps(items, sort_keys = True, indent = 4)    
+        return json.dumps(items, sort_keys = True, indent = 4)   
+
+    
     
     
 
