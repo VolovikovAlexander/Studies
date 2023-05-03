@@ -111,5 +111,5 @@ class executor():
         """
         Сформировать SQL запрос на вставку данных
         """
-        sql = "insert into executors(id, name, description, parent_id) values('%s', '%s', '%s', %s)" % (self.id, self.name, self.description,  self.contraсtor.id )
+        sql = "insert into executors(id, name, description, contractor_id) values('%s', '%s', '%s', '%s')" % (self.id.toJSON(), self.name, self.description,  self.contraсtor.id.toJSON())
         return sql

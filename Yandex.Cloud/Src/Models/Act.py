@@ -125,7 +125,7 @@ class act():
         if not isinstance(_contractor, contractor):
             raise Exception("ОШИБКА! Параметр _contractor - должен быть типом contractor!")
         
-        self.__contractors[_contractor.guid] = _contractor
+        self.__contractors[_contractor.id] = _contractor
         self.add(_contractor.parent)
 
 

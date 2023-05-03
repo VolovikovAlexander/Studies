@@ -48,7 +48,7 @@ class proxy_tests(unittest.TestCase):
         proxy.create()
 
         # Действие
-        proxy.execute("alter table buildings detele where 1 = 1")
+        proxy.execute("alter table buildings delete where 1 = 1")
 
         # Проверки
         print(proxy.error_text)
@@ -91,6 +91,7 @@ class proxy_tests(unittest.TestCase):
         print(proxy.error_text)
         assert proxy.error_text == ""
         assert proxy.is_error == False
+
 
 
 

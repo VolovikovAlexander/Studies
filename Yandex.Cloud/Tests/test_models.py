@@ -30,7 +30,7 @@ class models_tests(unittest.TestCase):
 
         # Проверки
         assert result is not None
-        print(result.guid)
+        print(result.id)
 
     # Проверить создание объекта типа contractor
     def test_create_contractor_with_parent(self):
@@ -42,7 +42,7 @@ class models_tests(unittest.TestCase):
 
         # Проверки
         assert result is not None
-        print(result.guid)
+        print(result.id)
         assert result.parent is not None
 
     # Проверить создание типа executor
@@ -55,7 +55,7 @@ class models_tests(unittest.TestCase):
 
         # Проверки
         assert result is not None
-        print(result.guid)
+        print(result.id)
 
 
     # Проверить создание документа /Акт/
