@@ -49,6 +49,17 @@ class progress_status():
         '''
         return self.__code
     
+    @code.setter
+    def code(self, value):
+        '''
+        Уникальный обычный код статуса
+        '''    
+        if value is None:
+            raise Exception("Некорректно указан параметр code!")
+        
+        self.__code = value 
+
+    
     @name.setter
     def name(self, value):
         '''

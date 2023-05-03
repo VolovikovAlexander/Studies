@@ -90,7 +90,8 @@ class json_convert_tests(unittest.TestCase):
         contractor_parent = contractor.create(name="test1", parent=None)
         contractor_act = contractor.create(name="test2", parent=contractor_parent)
         executor_act = executor.create(name="test3", _contractor=contractor_act)
-        object = act.create(_executor=executor_act)
+        building_act = building.create(name="test4")
+        object = act.create(_executor=executor_act, _building=building_act)
 
 
         # Действие

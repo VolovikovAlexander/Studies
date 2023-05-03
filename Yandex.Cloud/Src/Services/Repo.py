@@ -2,6 +2,7 @@ from Src.Models.Act import act
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
 from Src.Services.Proxy import db_proxy
+from Src.Models.Building import building
 
 """
 #  Класс репозиторий
@@ -51,7 +52,8 @@ class repo():
         contractor_parent = contractor.create(name="test1", parent=None)
         contractor_act = contractor.create(name="test2", parent=contractor_parent)
         executor_act = executor.create(name="test3", _contractor=contractor_act)
-        current_act = act.create(_executor=executor_act)
+        building_act = building.create(name="test4")
+        current_act = act.create(_executor=executor_act, _building=building_act)
 
         self.__acts.append(current_act)
 
