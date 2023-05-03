@@ -6,12 +6,14 @@ from Src.Models.Act import act
 from Src.Services.Proxy import db_proxy
 from Src.Models.Period import period
 
+import random
+
 # Набор операций для создания произвольных данных 
 
 class generator():
     __buildings = []
     __executors = {}
-    __contractors= {}
+    __contractors= []
     __proxy = None
 
     def __init__(self):
@@ -43,7 +45,7 @@ class generator():
             
             self.__buildings.append(_building)
             
-        print("Сформировано успешно %s записей ОКС за %s сек." % (quantity, start_period.diff()))    
+        print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))    
 
     def create_contractors(self, quantity):
         """
@@ -61,13 +63,29 @@ class generator():
 
         for position in range(quantity):
             _name = "contractor № %s" %  (position + 1)
+            _contractor = contractor.create(_name)
+
+            if len(self.__contractors) > 0:
+                _number = int(random.random() * len(self.__contractors))
+
+                if _number > 1 and _number <=len(self.__contractors):
+                    _parent = self.__contractors[_number]
+                    _contractor = contractor.create(_name, parent=_parent)
+
+            result = self.__proxy.execute(str(_contractor))
+            if not result:
+                print("ОШИБКА! %s" % (self.__proxy.error_text))
+                return
             
+            self.__contractors.append(_contractor)
+
+        print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))        
 
 
 
 
 
 main = generator()
-main.create_buildings(100)
+#main.create_buildings(100)
 main.create_contractors(100)
 

@@ -78,7 +78,7 @@ class contractor():
         """
         return self.__parent
 
-    def create( name, parent):
+    def create( name, parent = None):
         """
         Фабричный метод. Создать объект типа building
         """
@@ -107,5 +107,9 @@ class contractor():
         """
         Сформировать SQL запрос на вставку данных
         """
-        sql = "insert into contractors (id, name, description) values ('%s','%s','%s')" % (self.id, self.name, self.description)
+        parent = "null"
+        if not self.__parent is None:
+            parent = "'" + self.__parent.id.toJSON() + "'"
+
+        sql = "insert into contractors (id, name, description, parent_id) values ('%s','%s','%s', %s)" % (self.id.toJSON(), self.name, self.description, parent)
         return sql
