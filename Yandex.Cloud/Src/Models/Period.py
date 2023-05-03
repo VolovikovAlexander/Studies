@@ -19,4 +19,5 @@ class period():
         """
         Преобразовать в Json
         """
-        return str(self.__period)
+        result = str(self.__period)
+        return result[0:19]

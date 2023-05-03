@@ -4,6 +4,7 @@ from Src.Models.Statuses import progress_status
 from Src.Models.Building import building
 from Src.Models.Executor import executor
 from Src.Models.Contractor import contractor
+from Src.Models.Act import act
 
 
 class proxy_tests(unittest.TestCase):
@@ -91,6 +92,31 @@ class proxy_tests(unittest.TestCase):
         print(proxy.error_text)
         assert proxy.error_text == ""
         assert proxy.is_error == False
+
+    #
+    # Проверить вставку данных типа act
+    #
+    def test_insert_act(self):
+        # Подготовка
+        proxy = db_proxy()
+        proxy.create()
+        contractor_parent = contractor.create(name="test1", parent=None)
+        contractor_act = contractor.create(name="test2", parent=contractor_parent)
+        executor_act = executor.create(name="test3", _contractor=contractor_act)
+        building_act = building.create(name="test4" )
+        object = act.create(_executor=executor_act, _building=building_act)
+        object.amount = 220.2
+        sql = str(object)
+
+        # Действие
+        print(sql)
+        proxy.execute(sql)
+
+        # Проверки
+        print(proxy.error_text)
+        assert proxy.error_text == ""
+        assert proxy.is_error == False
+
 
 
 

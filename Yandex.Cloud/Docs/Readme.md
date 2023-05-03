@@ -136,9 +136,9 @@ rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net :)
 | `statuses`                   | Таблица статусов | `create table statuses(id UUID, code Int, name String, description String, primary key[id]) engine = MergeTree;` |
 | `executors`                  | Таблица исполнителей | `create table executors(id UUID, name String, description String, contractor_id UUID not null, primary key[id]) engine = MergeTree;` |
 | `contractors`                | Таблица застройщиков | `create table contractors(id UUID, parent_id UUID, name String,description String, primary key[id]) engine = MergeTree;` |
-| `acts`                       | Таблица с основной информацией по актам | `create table acts(id UUID, building_id UUID not Null, executor_id UUID,  period DateTime not null, amount  Float32 default(0), primary key[id]) engine = MergeTree;` |
+| `acts`                       | Таблица с основной информацией по актам | `create table acts(id UUID, building_id UUID not Null, executor_id UUID,  period DateTime not null,  primary key[id]) engine = MergeTree;` |
 | `acts_contractor_links`      | Таблица связи акта с застройщиками | `create table acts_contractors_links(id UUID, period DateTime not null, contractor_id UUID not null,  primary key[id]) engine = MergeTree;` |
-| `acts_status_links`          | Таблица связи акта со статусом | `create table acts_status_links(id UUID, period DateTime not null, status_id UUID not null, description String, executor_id UUID not null,  primary key[id]) engine = MergeTree` |
+| `acts_status_links`          | Таблица связи акта со статусом | `create table acts_status_links(id UUID, period DateTime not null, status_code Int not null, comments String, amount  Float32 default(0), primary key[id]) engine = MergeTree` |
 | | | |
 
 

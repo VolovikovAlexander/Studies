@@ -76,7 +76,7 @@ class building():
         """
         result = building()
         result.name = name
-        result.__guid = guid().toJSON()
+        result.__guid = guid()
 
         return result
 
@@ -93,7 +93,7 @@ class building():
         """
         Сформировать SQL запрос на вставку данных
         """
-        sql = "insert into buildings (id, name, description) values ('%s','%s','%s')" % (self.id, self.name, self.description)
+        sql = "insert into buildings (id, name, description) values ('%s','%s','%s')" % (self.id.toJSON(), self.name, self.description)
         return sql
 
         

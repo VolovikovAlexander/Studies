@@ -4,6 +4,7 @@ from Src.Models.Contractor import contractor
 from Src.Models.Period import period
 from Src.Services.Helper import helper
 from Src.Models.Guid import guid
+from Src.Models.Building import building
 
 import json
 
@@ -18,6 +19,8 @@ class act():
     __progress = None
     __period = None
     __guid = ""
+    __building = None
+    __comments = ""
 
     def __init__(self):
         self.__progress = progress_status.start
@@ -60,12 +63,13 @@ class act():
 
 
     @property
-    def uid(self):
+    def id(self):
         """
         Свойство. Уникальный номер документа
         """
         return self.__guid    
 
+    # Данное свойство не меняется в акте
     @property
     def executor(self):
         """
@@ -73,19 +77,6 @@ class act():
         """
         return self.__executor
 
-    @executor.setter
-    def executor(self, value):
-        """
-        Свойство: Исполнитель    
-        """
-        if value is None:
-            raise Exception("ОШИБКА! Параметр executor - не указан!")
-        
-        if not isinstance(value, executor):
-            raise Exception("ОШИБКА! Параметр executor - должен быть типом executor!")
-        
-        self.__executor = value
-        
 
     @property    
     def period(self):
@@ -100,15 +91,54 @@ class act():
         Свойство: Список застройщиков   
         """
         return list(self.__contractors.values())
+    
+    # Данное свойство не меняется в акте 
+    @property
+    def building(self):
+        """
+        Свойство: Объект капитального строительства
+        """
+        return self.__building
+    
+    @property
+    def comments(self):
+        """
+        Свойство: Краткий комментарий к акту
+        """
+        return self.__comments
+    
+    @comments.setter
+    def comments(self, value):
+        """
+        Свойство: Краткий комментарий к акту
+        """
+        if value is None:
+            return
+        
+        self.__comments = value
         
 
-    def create(_executor):
+    def create(_executor, _building):
         """
         Фабричный метод    
         """
+
+        if _building is None:
+            raise Exception("ОШИБКА! Параметр _building - не указан!")
+        
+        if not isinstance(_building, building):
+            raise Exception("ОШИБКА! Параметр _building - долже быть типом  building!")
+        
+        if _executor is None:
+            raise Exception("ОШИБКА! Параметр executor - не указан!")
+        
+        if not isinstance(_executor, executor):
+            raise Exception("ОШИБКА! Параметр executor - должен быть типом executor!")
+
         result = act()
-        result.executor = _executor
+        result.__executor = _executor
         result.add(_executor.contraсtor)
+        result.__building = _building
 
         result.__guid = guid()
 
@@ -135,6 +165,28 @@ class act():
         """
         items = helper.toDict(self)
         return json.dumps(items, sort_keys = True, indent = 4)   
+    
+    def __str__(self):
+        """
+        Сформировать SQL запрос на вставку данных
+        """
+
+        # Заголовок документа
+        sql = "insert into acts(id, building_id, executor_id, period) values('%s', '%s', '%s', '%s');\n" % (self.id.toJSON(), self.building.id.toJSON(), self.executor.id.toJSON(), self.period.toJSON())
+
+        currect_period = period()
+
+        # Прогресс
+        sql += "insert into acts_status_links (id , period, status_code, comments, amount) values('%s', '%s', %s, '%s', %s);\n" % (self.id.toJSON(), currect_period.toJSON(), self.__progress, self.__comments, self.amount)
+
+        # Связка с застройщиками
+        for key in self.__contractors:
+            sql += "insert into acts_contractors_links(id, period, contractor_id) values('%s', '%s', '%s');\n" % (self.id.toJSON(), currect_period.toJSON(), key.toJSON())
+
+        return sql
+
+
+
 
     
     

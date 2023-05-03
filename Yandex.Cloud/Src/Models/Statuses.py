@@ -42,6 +42,13 @@ class progress_status():
         '''
         return self.__name
     
+    @property
+    def code(self):
+        '''
+        Уникальный обычный код статуса
+        '''
+        return self.__code
+    
     @name.setter
     def name(self, value):
         '''
