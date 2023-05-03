@@ -170,14 +170,38 @@ insert into statuses(id, name, code, description) select generateUUIDv4(),'finis
 1. Доработать таблицу `statuses`. Исключить возможность дублирования записей по полям: **name**,**code**. Сделать в виде SQL скрипта в котором сразу же включить проверку.
 2. Изенить таблицу `acts_status_links`. Сделать связь со статусом не по **UUID** , а по коду **Int**. Сделать в виде SQL скрипта.
 
-#### Генерация данных
+#### Работа с ClickHouse
 
 1. Установим [пакет](https://readthedocs.org/projects/clickhouse-driver/downloads/pdf/latest/) 
 ```
 pip install clickhouse-driver
 ```
 
-2. Создадим [отдельный класс](../Src/Services/Proxy.py) для работы с базой данных `proxy`. Так же, добавим для проверки [модульный тест](../Tests/test_proxy.py)
+2. Создадим [отдельный класс](../Src/Services/Proxy.py) для работы с базой данных `proxy`. 
+3. Так же, добавим для проверки [модульный тест](../Tests/test_proxy.py)
+4. Для всех моделей добавим метод `__str__` и в каждом методе определим SQL команду для вставки данных. Пример:
+
+```python
+    def __str__(self):
+        """
+        Сформировать SQL запрос на вставку данных
+        """
+        sql = "insert into executors(id, name, description, contractor_id) values('%s', '%s', '%s', '%s')" % (self.id.toJSON(), self.name, self.description,  self.contraсtor.id.toJSON())
+        return sql
+```        
+
+#### Генерация тестовых данных
+
+1. Создадим [отдельный класс](../Generator.py) c автозапуском. Последовательно в нем реализуем генерацию всех моделей с засечкой времени выполнения.
+2. Для фиксации времени выполнения добавим новый метод в модель `period`
+
+Пример:
+```
+Генерация записей ОКС
+Старт: 2023-05-03 11:11:59
+Сформировано успешно 100 записей ОКС за 13.980264 сек.
+```
+
 
 
 
