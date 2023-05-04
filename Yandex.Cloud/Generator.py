@@ -118,6 +118,7 @@ class generator():
 
 
 
+# Запускаем генерацию данных
 
 main = generator()
 main.create_buildings(100)
