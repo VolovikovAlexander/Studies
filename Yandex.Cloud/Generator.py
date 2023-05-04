@@ -146,8 +146,9 @@ class generator():
             _number_executor = int(random.random() * len(self.__executors))
             _act = act.create(self.__executors[_number_executor], self.__buildings[_number_building])
 
-            # Добавим 10 разных застройщиков к акту
-            for item in range(10):
+            # Добавим разных застройщиков к акту
+            _number_contractors= int(random.random() * 3)
+            for item in range(_number_contractors):
                 _number_contractor = int(random.random() * len(self.__contractors))
                 _act.add(self.__contractors[_number_contractor])
 
@@ -157,7 +158,9 @@ class generator():
             _act.period = _act_period
 
             # Сохраним результат
-            result = self.__proxy.execute(str(_act))
+
+            sql = str(_act)
+            result = self.__proxy.execute(sql)
             if not result:
                     print("ОШИБКА! %s" % (self.__proxy.error_text))
                     return
@@ -174,7 +177,7 @@ main = generator()
 main.create_buildings(100)
 main.create_contractors(100)
 main.create_executors(100)
-main.create_acts(500)
+main.create_acts(100)
 print("Генерация данных завершена за %s сек." % (start_period.diff()))      
 
 

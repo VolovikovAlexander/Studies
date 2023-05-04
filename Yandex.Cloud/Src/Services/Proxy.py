@@ -133,7 +133,11 @@ class db_proxy():
             raise Exception("Невозможно выполнить SQL запрос. " + self.__error_text)
         
         try:
-            self.__client.execute(sql, params)
+            items = sql.split('\n')
+            for item in items:
+                if item.strip() != "":
+                    self.__client.execute(item, params)
+
             return True
         except Exception as ex:
             self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + "): " + ex.args[0]            

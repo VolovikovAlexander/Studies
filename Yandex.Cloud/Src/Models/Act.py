@@ -188,8 +188,8 @@ class act():
         if not isinstance(_contractor, contractor):
             raise Exception("ОШИБКА! Параметр _contractor - должен быть типом contractor!")
         
-        find_result =  filter( lambda x:x == _contractor.id, self.__contractors)
-        if not find_result:
+        find_result =  list(filter( lambda x:x == _contractor.id, self.__contractors))
+        if len(find_result) == 0:
             self.__contractors[_contractor.id] = _contractor
             
         if not _contractor.parent is None:
