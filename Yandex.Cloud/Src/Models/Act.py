@@ -45,6 +45,26 @@ class act():
         self.__amount = value
 
     @property
+    def period(self):
+        """
+        Свойство: Дата документа
+        """
+        return self.__period    
+
+    @period.setter    
+    def period(self, value):
+        """
+        Свойство: Дата документа
+        """
+        if value is None:
+            raise Exception("ОШИБКА! параметр period - не указан!")
+        
+        if not isinstance(value, period):
+            raise Exception("ОШИБКА! Некорректно указан параметр period!")
+        
+        self.__period = value
+
+    @property
     def progress(self):
         """
         Свойство: Статус - прогресс
@@ -81,9 +101,22 @@ class act():
     @property    
     def period(self):
         """
-        Дата и время создания документа
+        Свойство: Дата и время создания документа
         """
-        return self.__period    
+        return self.__period   
+
+    @period.setter
+    def period(self, value):
+        """
+        Свойство: Дата и время создания документа
+        """
+        if value is None:
+            raise Exception("ОШИБКА! Не указано поле period!") 
+        
+        if not isinstance(value, period):
+            raise Exception("ОШИБКА! Не указано поле period!") 
+        
+        self.__period = value
         
     @property
     def contractors(self):
@@ -147,7 +180,7 @@ class act():
 
     def add(self, _contractor):
         """
-         Добавить в документ исполнителей
+         Добавить в документ застройщиков
         """
         if _contractor is None:
             return
@@ -155,8 +188,12 @@ class act():
         if not isinstance(_contractor, contractor):
             raise Exception("ОШИБКА! Параметр _contractor - должен быть типом contractor!")
         
-        self.__contractors[_contractor.id] = _contractor
-        self.add(_contractor.parent)
+        find_result =  filter( lambda x:x == _contractor.id, self.__contractors)
+        if not find_result:
+            self.__contractors[_contractor.id] = _contractor
+            
+        if not _contractor.parent is None:
+            self.add(_contractor.parent)
 
 
     def toJSON(self):

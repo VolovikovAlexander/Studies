@@ -7,6 +7,8 @@ from Src.Services.Proxy import db_proxy
 from Src.Models.Period import period
 
 import random
+from datetime import datetime
+import datetime
 
 # Набор операций для создания произвольных данных 
 
@@ -115,13 +117,64 @@ class generator():
 
         print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))                
 
+    def create_acts(self, quantity):
+        """
+        Создать набор актов с разными статусами
+        """
+        if quantity is None:
+            raise Exception("ОШИБКА! Не указано количество записей которое нужно сформировать!")
+        
+        if quantity < 1:
+            raise Exception("ОШИБКА! Некорректно указано количество записей!")
+        
+        if len(self.__contractors) == 0:
+            raise Exception("ОШИБКА! Необходимо сперва сформировать застройщиков")
+        
+        if len(self.__buildings) == 0:
+            raise Exception("ОШИБКА! Необходимо сперва сформировать ОКС")
+
+        if len(self.__executors) == 0:
+            raise Exception("ОШИБКА! Необходимо сперва сформировать исполнителей")
+        
+        start_period = period()
+        print("-> Генерация записей: acts")
+        print("Старт: %s" % start_period.toJSON())
+
+        for position in range(quantity):
+            # Создадим базовый акт            
+            _number_building = int(random.random() * len(self.__buildings))
+            _number_executor = int(random.random() * len(self.__executors))
+            _act = act.create(self.__executors[_number_executor], self.__buildings[_number_building])
+
+            # Добавим 10 разных застройщиков к акту
+            for item in range(10):
+                _number_contractor = int(random.random() * len(self.__contractors))
+                _act.add(self.__contractors[_number_contractor])
+
+            # Произвольный период (- 365 дней назал)
+            _days_period =  int(random.random() * 365)
+            _act_period = period( days=_days_period * (-1))
+            _act.period = _act_period
+
+            # Сохраним результат
+            result = self.__proxy.execute(str(_act))
+            if not result:
+                    print("ОШИБКА! %s" % (self.__proxy.error_text))
+                    return
+
+            # Заменим статусы
+                
+        print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))         
 
 
 
 # Запускаем генерацию данных
-
+start_period = period()
 main = generator()
 main.create_buildings(100)
 main.create_contractors(100)
 main.create_executors(100)
+main.create_acts(500)
+print("Генерация данных завершена за %s сек." % (start_period.diff()))      
+
 
