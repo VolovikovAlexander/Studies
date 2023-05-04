@@ -139,6 +139,16 @@ class db_proxy():
             self.__error_text = "Ошибка при выполнении SQL запроса (" + sql + "): " + ex.args[0]            
             return False
         
+    def clear(self):
+        """
+        Очистить базу данных
+        """    
+        self.execute("alter table buildings delete where 1 = 1;")
+        self.execute("alter table executors delete where 1 = 1;")
+        self.execute("alter table contractors delete where 1 = 1;")
+        self.execute("alter table acts delete where 1 = 1;")
+        self.execute("alter table acts_contractors_links delete where 1 = 1;")
+        self.execute("alter table acts_status_links delete where 1 = 1;")
 
 
         

@@ -12,13 +12,14 @@ import random
 
 class generator():
     __buildings = []
-    __executors = {}
+    __executors = []
     __contractors= []
     __proxy = None
 
     def __init__(self):
         self.__proxy = db_proxy()
         self.__proxy.create()
+        self.__proxy.clear()
 
     def create_buildings(self, quantity):
         '''
@@ -31,7 +32,7 @@ class generator():
             raise Exception("ОШИБКА! Некорректно указано количество записей!")
         
         start_period = period()
-        print("Генерация записей: buildings")
+        print("-> Генерация записей: buildings")
         print("Старт: %s" % start_period.toJSON())
         
         for position in range(quantity):
@@ -58,7 +59,7 @@ class generator():
             raise Exception("ОШИБКА! Некорректно указано количество записей!")
         
         start_period = period()
-        print("Генерация записей: contractors")
+        print("-> Генерация записей: contractors")
         print("Старт: %s" % start_period.toJSON())
 
         for position in range(quantity):
@@ -81,11 +82,45 @@ class generator():
 
         print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))        
 
+    def create_executors(self, quantity):
+        """
+        Сформировать исполнителей
+        """
+        if quantity is None:
+            raise Exception("ОШИБКА! Не указано количество записей которое нужно сформировать!")
+        
+        if quantity < 1:
+            raise Exception("ОШИБКА! Некорректно указано количество записей!")
+        
+        if len(self.__contractors) == 0:
+            raise Exception("ОШИБКА! Необходимо сперва сформировать застройщиков")
+        
+        start_period = period()
+        print("-> Генерация записей: executors")
+        print("Старт: %s" % start_period.toJSON())
+
+        for position in range(quantity):
+            _name = "executor № %s" %  (position + 1)
+            _number = int(random.random() * len(self.__contractors))
+            if _number > 1 and _number <=len(self.__contractors):
+                _contractor = self.__contractors[_number]
+                _executor = executor.create(_name,_contractor)
+
+                result = self.__proxy.execute(str(_executor))
+                if not result:
+                    print("ОШИБКА! %s" % (self.__proxy.error_text))
+                    return
+            
+                self.__executors.append(_executor)
+
+        print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))                
+
 
 
 
 
 main = generator()
-#main.create_buildings(100)
+main.create_buildings(100)
 main.create_contractors(100)
+main.create_executors(100)
 
