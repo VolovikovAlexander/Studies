@@ -16,6 +16,7 @@ class generator():
     __buildings = []
     __executors = []
     __contractors= []
+    __acts= []
     __proxy = None
 
     def __init__(self):
@@ -136,6 +137,9 @@ class generator():
         if len(self.__executors) == 0:
             raise Exception("ОШИБКА! Необходимо сперва сформировать исполнителей")
         
+        if quantity < 25:
+            raise Exception("ОШИБКА! Необходимо указать актов > 25")
+        
         start_period = period()
         print("-> Генерация записей: acts")
         print("Старт: %s" % start_period.toJSON())
@@ -156,6 +160,7 @@ class generator():
             _days_period =  int(random.random() * 365)
             _act_period = period( days=_days_period * (-1))
             _act.period = _act_period
+            self.__acts.append(_act)
 
             # Сохраним результат
 
@@ -164,8 +169,36 @@ class generator():
             if not result:
                     print("ОШИБКА! %s" % (self.__proxy.error_text))
                     return
+            
+        print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))     
+            
+    def create_status_history(self, quantity):        
+        """
+        Создать история статусов
+        """
+        if quantity is None:
+            raise Exception("ОШИБКА! Не указано количество записей которое нужно сформировать!")
+        
+        if quantity < 1:
+            raise Exception("ОШИБКА! Некорректно указано количество записей!")
+        
+        start_period = period()
+        print("-> Генерация записей: acts_status_links")
+        print("Старт: %s" % start_period.toJSON())
+        
+        _number_statuses = int(random.random() * 25)
+        for _act_number in range[_number_statuses]:
+            _act = self.__acts[_act_number]
+            _status = int(random.random() * 5)
+            _act.progress = _status
 
-            # Заменим статусы
+
+            sql = str(_act)
+            result = self.__proxy.execute(sql)
+            if not result:
+                    print("ОШИБКА! %s" % (self.__proxy.error_text))
+                    return
+
                 
         print("Сформировано успешно %s записей за %s сек." % (quantity, start_period.diff()))         
 
@@ -177,7 +210,8 @@ main = generator()
 main.create_buildings(100)
 main.create_contractors(100)
 main.create_executors(100)
-main.create_acts(100)
+main.create_acts(50)
+main.create_status_history(25)
 print("Генерация данных завершена за %s сек." % (start_period.diff()))      
 
 
