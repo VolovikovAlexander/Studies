@@ -223,10 +223,6 @@ pip install clickhouse-driver
 | Код акта    |  Дата ввода документа  | Сумма штрафа   | Дата смены статуса   |  Наименование статуса  |
 |-------------|------------------------|----------------|----------------------|------------------------|
 
-> Подсказка:
-> ```sql
-> select t1.id, t1.period, t2.amount, t2.period as status_period, t3.name from acts as t1 inner join acts_status_links as t2  on t1.id = t2.id  inner join statuses as t3 on t3.code = t2.status_code
-> ```
 
 2. Вывести информация в виде (составить SQL запрос):
 
