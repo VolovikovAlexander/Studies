@@ -70,7 +70,7 @@ class generator():
             _contractor = contractor.create(_name)
 
             if len(self.__contractors) > 0:
-                _number = int(random.random() * len(self.__contractors))
+                _number = random.randint(0, len(self.__contractors) - 1)
 
                 if _number > 1 and _number <=len(self.__contractors):
                     _parent = self.__contractors[_number]
@@ -104,7 +104,8 @@ class generator():
 
         for position in range(quantity):
             _name = "executor № %s" %  (position + 1)
-            _number = int(random.random() * len(self.__contractors))
+            _number = random.randint(0, len(self.__contractors) - 1)
+
             if _number > 1 and _number <=len(self.__contractors):
                 _contractor = self.__contractors[_number]
                 _executor = executor.create(_name,_contractor)
@@ -146,18 +147,18 @@ class generator():
 
         for position in range(quantity):
             # Создадим базовый акт            
-            _number_building = int(random.random() * len(self.__buildings))
-            _number_executor = int(random.random() * len(self.__executors))
+            _number_building = random.randint(0, len(self.__buildings) - 1) 
+            _number_executor = random.randint(0, len(self.__executors) - 1)
             _act = act.create(self.__executors[_number_executor], self.__buildings[_number_building])
 
             # Добавим разных застройщиков к акту
-            _number_contractors= int(random.random() * 3)
+            _number_contractors= random.randint(1,5) 
             for item in range(_number_contractors):
-                _number_contractor = int(random.random() * len(self.__contractors))
+                _number_contractor = random.randint(0, len(self.__contractors) - 1)
                 _act.add(self.__contractors[_number_contractor])
 
             # Произвольный период (- 365 дней назал)
-            _days_period =  int(random.random() * 365)
+            _days_period =  random.randint(1, 365)
             _act_period = period( days=_days_period * (-1))
             _act.period = _act_period
             self.__acts.append(_act)
@@ -186,12 +187,10 @@ class generator():
         print("-> Генерация записей: acts_status_links")
         print("Старт: %s" % start_period.toJSON())
         
-        _number_statuses = int(random.random() * 25)
-        for _act_number in range[_number_statuses]:
+        for _act_number in range(quantity):
             _act = self.__acts[_act_number]
-            _status = int(random.random() * 5)
+            _status = random.randint(1,5)
             _act.progress = _status
-
 
             sql = str(_act)
             result = self.__proxy.execute(sql)
