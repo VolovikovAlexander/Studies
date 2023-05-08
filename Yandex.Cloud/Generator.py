@@ -18,6 +18,7 @@ class generator():
     __contractors= []
     __acts= []
     __proxy = None
+    _statuses = [progress_status.failure, progress_status.finish, progress_status.passing, progress_status.preparation]
 
     def __init__(self):
         self.__proxy = db_proxy()
@@ -161,6 +162,8 @@ class generator():
             _days_period =  random.randint(1, 365)
             _act_period = period( days=_days_period * (-1))
             _act.period = _act_period
+            _act.amount = random.randint(1, 1000)
+            
             self.__acts.append(_act)
 
             # Сохраним результат
@@ -189,7 +192,7 @@ class generator():
         
         for _act_number in range(quantity):
             _act = self.__acts[_act_number]
-            _status = random.randint(1,5)
+            _status = self._statuses[ random.randint(0, len(self._statuses) - 1)]
             _act.progress = _status
 
             sql = str(_act)

@@ -76,9 +76,7 @@ class act():
         if value is None:
             raise Exception("ОШИБКА! Параметр progress - не указан!")
 
-        if not isinstance(value, progress_status):
-            raise Exception("ОШИБКА! Параметр progress, некорректно указан!")    
-
+      
         self.__progress = value    
 
 
