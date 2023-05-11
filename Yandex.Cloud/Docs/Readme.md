@@ -134,7 +134,7 @@ rc1a-7ut3ob6t69958voj.mdb.yandexcloud.net :)
 Таблицы:
 | Наименование                 | Описание                | SQL запрос                     |
 |------------------------------|-------------------------|--------------------------------|
-| `buildings`                  | Таблица всех объектов капитального строительства (ОКС) | `create table buildings(id String, name String, description String, primary key[id]) engine = MergeTree;` | 
+| `buildings`                  | Таблица всех объектов капитального строительства (ОКС) | `create table buildings(id UUID, name String, description String, primary key[id]) engine = MergeTree;` | 
 | `statuses`                   | Таблица статусов | `create table statuses(id UUID, code Int, name String, description String, primary key[id]) engine = MergeTree;` |
 | `executors`                  | Таблица исполнителей | `create table executors(id UUID, name String, description String, contractor_id UUID not null, primary key[id]) engine = MergeTree;` |
 | `contractors`                | Таблица застройщиков | `create table contractors(id UUID, parent_id UUID, name String,description String, primary key[id]) engine = MergeTree;` |
@@ -240,6 +240,67 @@ pip install clickhouse-driver
         self.__proxy = db_proxy()
         self.__proxy.open()
 ```
+
+### Построение витрин данных
+#### Проблемные застройщики
+
+**Критерии**:
+1. Последний рабочий статус акта `failure` (код 4)
+2. Имеют разные объекты строительства (ОКС)
+
+```sql
+with cte_acts as
+(
+    -- Список проблемных актов
+     select id as act_id from ( select id, argMax(status_code, period) as status_code from acts_status_links group by id) as tt where tt.status_code = 4 
+),
+cte_buildings  as 
+(
+    -- Список проблемных застройщиков
+    select t2.id as building_id, t2.name as building_name
+    from acts as t1 
+    inner join cte_acts as tt on tt.act_id = t1.id 
+    inner join buildings as t2 on t1.building_id = t2.id
+    group by t2.id, t2.name
+),
+cte_quantity_acts as
+(
+    -- Количество актов в работе по каждому застройщику
+    select t1.building_id, count(*) as cnt_all from acts as t1 where t1.building_id in ( select building_id from cte_buildings)
+    group by t1.building_id
+),
+cte_quantity_failure_acts as
+(
+    -- Количество актов по застройщикам, которые имеют проблемы
+    select t1.building_id as building_id, count(*) as cnt_failure, sum(tt.amount) as amount from acts as t1
+    left join ( select id as act_id, argMax(amount, period) as amount from acts_status_links where status_code = 4 group by id ) as tt on tt.act_id = t1.id
+    where t1.id in (select act_id from cte_acts) 
+    group by t1.building_id 
+)
+
+select t1.building_id, t1.building_name, t2.cnt_all, t3.cnt_failure, t3.amount from cte_buildings as t1
+left join cte_quantity_acts as t2 on t1.building_id = t2.building_id
+left join cte_quantity_failure_acts as t3 on t3.building_id = t1.building_id
+order by t2.cnt_all, t3.cnt_failure, t3.amount desc;
+```
+
+Выводим информацию в следующем виде:
+| Ссылка на застройщика | Наименование застройщика  | Количество актов в работе  | Количество актов с замечаниями   | Сумма предполагаемого штрафа,руб |
+|-----------------------|---------------------------|----------------------------|----------------------------------|----------------------------------|  
+
+Результат выполнения запроса:
+```
+┌─t1.building_id───────────────────────┬─t1.building_name─┬─t2.cnt_all─┬─t3.cnt_failure─┬─t3.amount─┐
+│ 46a11a3a-7657-4d96-8a3f-7f0eaaae7013 │ building № 53    │          2 │              2 │      1976 │
+│ 58a7a2a0-88cd-4587-aba3-8176aef0f9d1 │ building № 34    │          2 │              2 │      1612 │
+│ 33844ae0-8e6c-4f91-8bcc-c0dc9a4abe8a │ building № 71    │          2 │              2 │       270 │
+│ 7b96ee1f-6b18-4d7a-86fc-bdb87c206ce6 │ building № 29    │          3 │              2 │      1948 │
+│ 4c469434-3a81-483d-9b51-a8bf402d066c │ building № 19    │          5 │              2 │      1052 │
+│ 66c22827-db8b-401f-b003-d875993bca44 │ building № 42    │          7 │              2 │       424 │
+└──────────────────────────────────────┴──────────────────┴────────────┴────────────────┴───────────┘
+```
+
+
 
 
 
