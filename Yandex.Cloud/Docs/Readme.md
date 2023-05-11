@@ -278,7 +278,7 @@ cte_quantity_failure_acts as
     group by t1.building_id 
 )
 
-select t1.building_id, t1.building_name, t2.cnt_all, t3.cnt_failure, t3.amount from cte_buildings as t1
+select concat('http://localhost:8080/api/contractors/',  toString(t1.building_id)) as link, t1.building_name as name,  t2.cnt_all as qauntity, t3.cnt_failure as failure, t3.amount from cte_buildings as t1
 left join cte_quantity_acts as t2 on t1.building_id = t2.building_id
 left join cte_quantity_failure_acts as t3 on t3.building_id = t1.building_id
 order by t2.cnt_all, t3.cnt_failure, t3.amount desc;
@@ -290,15 +290,17 @@ order by t2.cnt_all, t3.cnt_failure, t3.amount desc;
 
 Результат выполнения запроса:
 ```
-┌─t1.building_id───────────────────────┬─t1.building_name─┬─t2.cnt_all─┬─t3.cnt_failure─┬─t3.amount─┐
-│ 46a11a3a-7657-4d96-8a3f-7f0eaaae7013 │ building № 53    │          2 │              2 │      1976 │
-│ 58a7a2a0-88cd-4587-aba3-8176aef0f9d1 │ building № 34    │          2 │              2 │      1612 │
-│ 33844ae0-8e6c-4f91-8bcc-c0dc9a4abe8a │ building № 71    │          2 │              2 │       270 │
-│ 7b96ee1f-6b18-4d7a-86fc-bdb87c206ce6 │ building № 29    │          3 │              2 │      1948 │
-│ 4c469434-3a81-483d-9b51-a8bf402d066c │ building № 19    │          5 │              2 │      1052 │
-│ 66c22827-db8b-401f-b003-d875993bca44 │ building № 42    │          7 │              2 │       424 │
-└──────────────────────────────────────┴──────────────────┴────────────┴────────────────┴───────────┘
+┌─link───────────────────────────────────────────────────────────────────────┬─name──────────┬─qauntity─┬─failure─┬─t3.amount─┐
+│ http://localhost:8080/api/contractors/46a11a3a-7657-4d96-8a3f-7f0eaaae7013 │ building № 53 │        2 │       2 │      1976 │
+│ http://localhost:8080/api/contractors/58a7a2a0-88cd-4587-aba3-8176aef0f9d1 │ building № 34 │        2 │       2 │      1612 │
+│ http://localhost:8080/api/contractors/33844ae0-8e6c-4f91-8bcc-c0dc9a4abe8a │ building № 71 │        2 │       2 │       270 │
+│ http://localhost:8080/api/contractors/7b96ee1f-6b18-4d7a-86fc-bdb87c206ce6 │ building № 29 │        3 │       2 │      1948 │
+│ http://localhost:8080/api/contractors/4c469434-3a81-483d-9b51-a8bf402d066c │ building № 19 │        5 │       2 │      1052 │
+│ http://localhost:8080/api/contractors/66c22827-db8b-401f-b003-d875993bca44 │ building № 42 │        7 │       2 │       424 │
+└────────────────────────────────────────────────────────────────────────────┴───────────────┴──────────┴─────────┴───────────┘
 ```
+
+> [Реализация](../Src/Data/BadContractor.py) выполнена в виде наследования от [общего класса](../Src/Data/Abstract.py).
 
 
 
