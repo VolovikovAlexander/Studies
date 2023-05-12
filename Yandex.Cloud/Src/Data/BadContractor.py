@@ -5,9 +5,9 @@ from Src.Data.Abstract import abstract
 """
 class bad_contractor(abstract):
     __link = ""
-    __quantity = 0
-    __failure = 0
-    __amount = 0 
+    __quantity = ""
+    __failure = ""
+    __amount = ""
 
     def __init__(self):
         super().__init__()
@@ -41,7 +41,7 @@ class bad_contractor(abstract):
             group by t1.building_id 
         )
 
-        select concat('http://localhost:8080/api/contractors/',  toString(t1.building_id)) as link, t1.building_name as name,  t2.cnt_all as qauntity, t3.cnt_failure as failure, t3.amount from cte_buildings as t1
+        select concat('http://localhost:8080/api/contractors/',  toString(t1.building_id)) as link, t1.building_name as name,  t2.cnt_all as qauntity, t3.cnt_failure as failure, t3.amount as amount from cte_buildings as t1
         left join cte_quantity_acts as t2 on t1.building_id = t2.building_id
         left join cte_quantity_failure_acts as t3 on t3.building_id = t1.building_id
         order by t2.cnt_all, t3.cnt_failure, t3.amount desc;
@@ -81,7 +81,7 @@ class bad_contractor(abstract):
         return self.__failure
     
     @failure.setter
-    def link(self, value):
+    def failure(self, value):
         self.__failure = value     
 
     @property
@@ -92,6 +92,20 @@ class bad_contractor(abstract):
         return self.__amount
     
     @amount.setter
-    def link(self, value):
+    def amount(self, value):
         self.__amount = value     
+
+
+    def create(proxy):
+        """
+        Фабричный метод. Сделать выборку данных и вернуть список объектов bad_contractor
+        """
+        if proxy is None:
+            raise Exception("ОШИБКА! Некорректно передан параметры proxy")
+
+        object = bad_contractor()
+        result = proxy.get_rows( sql = object.sql, map_type= bad_contractor)
+        return result
+
+
                

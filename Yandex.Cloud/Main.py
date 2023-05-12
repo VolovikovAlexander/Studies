@@ -5,7 +5,7 @@ import connexion
 import json
 
 
-repo  =  repo.create(is_demo=True)
+repo  =  repo.create()
 options = {"swagger_ui": True}
 api = connexion.FlaskApp(__name__, specification_dir='./', options=options)
 
@@ -140,6 +140,23 @@ def getBuilding():
     result = json.dumps(result, sort_keys = True, indent = 4)  
     return '{"building":' + result + '}'
 
+
+# ==========================================================
+# Dashboards
+
+@api.route("/dasboards/bad_contractors", methods=['GET'])
+def getBadContractors():
+    """
+    Dashboard: Получить статистику по застройщикам
+    """
+    items = repo.get_bad_contractors()
+    result = []
+    for item in items:
+        result.append(helper.toDict(item))
+
+    # Возвращает 200
+    result = json.dumps(result, sort_keys = True, indent = 4)  
+    return '{"dashboard":' + result + '}'
 
 
 if __name__ == '__main__':

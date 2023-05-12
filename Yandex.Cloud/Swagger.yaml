@@ -23,3 +23,18 @@ paths:
                   type: array
                   items:
                     type: string
+
+    /dashboard/bad_contractors:
+      get:
+        summary: Получить статистику по застройщикам
+        operationId: Main.getBadContractors
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                dashboard:
+                  type: array
+                  items:
+                    type: string                    

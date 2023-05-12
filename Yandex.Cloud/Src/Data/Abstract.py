@@ -1,5 +1,3 @@
-from Src.Services.Proxy import db_proxy
-
 
 """
 Абстрактный класс для наследования. 
@@ -9,13 +7,7 @@ class abstract():
     __name = ""
     __description = ""
     __sql = ""
-    __proxy = None
 
-    def __init__(self):
-        self.__proxy = db_proxy()
-        self.__proxy.open()
-        
-        
 
     @property
     def name(self):
@@ -67,7 +59,7 @@ class abstract():
         """
         return self.__sql
     
-    @name.setter
+    @sql.setter
     def sql(self, value):
         """
         SQL запрос на получение данных

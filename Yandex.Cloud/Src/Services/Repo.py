@@ -4,6 +4,8 @@ from Src.Models.Contractor import contractor
 from Src.Services.Proxy import db_proxy
 from Src.Models.Building import building
 
+from Src.Data.BadContractor import bad_contractor
+
 """
 #  Класс репозиторий
 """
@@ -13,6 +15,10 @@ class repo():
     __executors = []
     __contractors = []
     __proxy = None
+
+    def __init__(self):
+        self.__proxy = db_proxy()
+        self.__proxy.create()
 
     # Методы данных    
 
@@ -42,13 +48,16 @@ class repo():
         
 
     # Методы класса
-
-    def load_demo(self):
+    def load(self):
         """
         Сформировать тестовые данные
         """    
         self.__acts = []
+        self.__buildings = []
+        self.__executors = []
+        self.__contractors = []
 
+        # Сформировать тестовый набор данных
         contractor_parent = contractor.create(name="test1", parent=None)
         contractor_act = contractor.create(name="test2", parent=contractor_parent)
         executor_act = executor.create(name="test3", _contractor=contractor_act)
@@ -58,30 +67,23 @@ class repo():
         self.__acts.append(current_act)
 
 
-    def load(self):
+    # Dashboards
+    def get_bad_contractors(self):
         """
-        Подключиться к базе данных
+        Получить Dashboad: Самые плохие застройщики
         """
-        self.__proxy = db_proxy()
-        self.__proxy.open()
-
-
+        return bad_contractor.create(self.__proxy)
 
     # Статические методы
-
-    def create(is_demo = False):
+    def create():
         """
         Фабричный метод
         """
         main = repo()
-        if is_demo == True:
-            main.load_demo()
-        else:    
-            main.load()
+        main.load()
 
         return main
 
-
-
+    
 
         
