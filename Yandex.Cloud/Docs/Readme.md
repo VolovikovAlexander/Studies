@@ -301,7 +301,8 @@ order by t2.cnt_all, t3.cnt_failure, t3.amount desc;
 ```
 
 > [Реализация](../Src/Data/BadContractor.py) выполнена в виде наследования от [общего класса](../Src/Data/Abstract.py).
-> Дорабатываем[yaml](../Swagger.yaml) файл.  Запускаеи: http://127.0.0.1:8080/api/ui/. Получаем:
+> Дорабатываем [yaml](../Swagger.yaml) файл.  Запускаем: http://127.0.0.1:8080/api/ui/. 
+> **Получаем:**
 
 ![](../Docs/swagger1.png)
 
