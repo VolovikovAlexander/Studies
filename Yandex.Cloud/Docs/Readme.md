@@ -21,6 +21,7 @@
 	- Установить плагины: Python, PyTest (`ms-python.python`, `littlefoxteam.vscode-python-test-adapter` ,`pamaron.pytest-runner`)
 3. Установить pip утилиту `sudo apt install python3-pip`
 	- Установить расширение для Python `pip install clickhouse-connect`
+    - Установить драйвер для работы `pip install clickhouse-driver`
 
 ### Основные объекты
 
