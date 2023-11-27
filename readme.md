@@ -29,7 +29,7 @@ http://sr.isu.ru/news/master-klass-ot-spetsialista-mezhdunarodnoy-kompanii-bell-
 
 ## Yandex.Cloud
 Краткий мастер класс по работе с облачным сервисом `Yandex.Cloud` и базой данных `Yandex.ClickHouse`. 
-Стек: `Python3','ClickHouse`,`connexion`
+Стек: `Python3`,`ClickHouse`,`connexion`
 
 #### Подробности
 В рамках мастер класса показывается основные приемы проектирования `Rest Api` сервисов с поддержкой `OpenApi`. Обсуждаются вопросы проектирования многослойной архитектуры. Изучаются вопросы проектирования базы данных.
