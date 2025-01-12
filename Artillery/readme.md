@@ -1,4 +1,4 @@
-# Разработка систем на основе PostgrSQL
+# Разработка систем на основе PostgreSQL
 
 #### Стек
 1. Операционная система: [`Linux`](https://ubuntu.com/download/desktop), [`Docker`](https://docs.docker.com/get-started/get-docker/)
