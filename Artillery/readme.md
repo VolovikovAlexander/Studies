@@ -120,16 +120,9 @@ END$$;
  - $Y_{0}$ - левая часть поправки
 
 ```sql
-
-	-- Поиск X1, X2 для температуры 8C
-
 	-- Получим 5 градусов
 	select Temperature from  public.calc_temperatures_correction
 	where  Temperature < 8 order by Temperature desc limit 1;
-
-	-- Получим 10 градусов
-	select Temperature from  public.calc_temperatures_correction
-	where  Temperature > 8 order by Temperature limit 1;
 ```
 
 **Задание:**
