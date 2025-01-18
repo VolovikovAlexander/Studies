@@ -1,3 +1,5 @@
+\usepackage{amsmath}
+
 # Разработка систем на основе PostgreSQL
 
 #### Стек
