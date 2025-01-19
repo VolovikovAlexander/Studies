@@ -164,6 +164,7 @@ select public.fn_calc_temperatures_correction(8, 5, 10, 0.5, 1);
 **Задание**
 > Добавить в функцию проверку аргументов. $X > X_{0} < X_{1}$ <br>
 > $D$ - должно быть больше > 0 <br>
+> Провери должны формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
 5. Создаем собственный тип данных. 
 ```sql
@@ -189,7 +190,7 @@ CREATE TYPE public.interpolation_batch AS
 
 2. Создать собственный тип данных для передахи входных параметров 
 3. Написать собственную функцию на вход должны подаваться входные параметры, а на выходе собственный тип данных.
-4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [RAISE ERROR](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
+4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
 
 
