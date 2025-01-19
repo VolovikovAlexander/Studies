@@ -192,6 +192,7 @@ CREATE TYPE public.interpolation_batch AS
 3. Написать собственную функцию на вход должны подаваться входные параметры, а на выходе собственный тип данных.
 4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
+####  Приближенный (`Занятие 3`)
 
 
  
