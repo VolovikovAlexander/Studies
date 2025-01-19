@@ -129,6 +129,42 @@ END$$;
 > Написать SQL запрос для получение $X_{1}$,  $X_{0}$,  $Y_{1}$ ,  $Y_{0}$ <br>
 > Написать SQL запрос расчета линейной интерполяции <br>
 
+3. Добавим функцию для расчета линейной интерполяции.
+```
+CREATE OR REPLACE FUNCTION public.fn_calc_temperatures_correction(
+    -- Значение для которого нужно посчитать интерполяцию
+	par_x numeric(8,2),
+	par_x0 numeric(8,2),
+	par_x1 numeric(8,2),
+	par_y0 numeric(8,2),
+	par_y1 numeric(8,2))
+    RETURNS numeric
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+AS $BODY$
+declare
+	denominator numeric(8,2) default 0;
+	correction numeric(8,2) default 0;
+begin
+	denominator := par_x1 - par_x0;
+	correction := (par_x - par_x0) * (par_y1 - par_y0) / denominator + par_y0;
+	
+	return correction;
 
+end
+$BODY$;
+```
+4. Меняем SQL запрос для получения  $X_{1}$,  $X_{0}$,  $Y_{1}$ ,  $Y_{0}$ с использованием функции.
+Пример
+```
+select public.fn_calc_temperatures_correction(8, 5, 10, 0.5, 1);
+```
+
+**Задание**
+> Добавить в функцию проверку аргументов. $X > X_{0} < X_{1}$
+> $D$ - должно быть больше > 0
+
+ 
  
 
