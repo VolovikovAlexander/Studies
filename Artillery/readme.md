@@ -130,7 +130,7 @@ END$$;
 > Написать SQL запрос расчета линейной интерполяции <br>
 
 3. Добавим функцию для расчета линейной интерполяции.
-```
+```sql
 CREATE OR REPLACE FUNCTION public.fn_calc_temperatures_correction(
     -- Значение для которого нужно посчитать интерполяцию
 	par_x numeric(8,2),
