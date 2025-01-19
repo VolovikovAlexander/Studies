@@ -193,6 +193,32 @@ CREATE TYPE public.interpolation_batch AS
 4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
 ####  Приближенный (`Занятие 3`)
+1. Создаем SQL функцию для преобразования даты времени в строковое значение `ДДЧЧММ` 
+```sql
+
+CREATE OR REPLACE FUNCTION public.fn_calc_period(
+	par_period timestamp with time zone)
+    RETURNS text
+    LANGUAGE 'sql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+
+RETURN  extract(day from par_period)::text || extract(hour from par_period)::text ||  extract(minute from par_period):: text;
+
+ALTER FUNCTION public.fn_calc_period(timestamp with time zone)
+    OWNER TO admin;
+```
+
+Пример
+```sql
+select fn_calc_period(CURRENT_TIMESTAMP)
+```
+
+**Задание:**
+> Измеить функцию. Добавить проверку по дню < 10 и минуты < 10.
+
+
+
 
 
  
