@@ -211,16 +211,52 @@ ALTER FUNCTION public.fn_calc_period(timestamp with time zone)
 
 Пример
 ```sql
-select fn_calc_period(CURRENT_TIMESTAMP)
+select fn_calc_period(CURRENT_TIMESTAMP);
+select public.fn_calc_period(now());
 ```
 
 **Задание:**
 > Измеить функцию. Добавить проверку по дню < 10 и минуты < 10.
 
-2. Создаем SQL функция для расчета `ВВВВ` - высота расположения метеопоста над уровнем моря.
+2. Создаем SQL функция для расчета `ВВВВ` - высота расположения метеопоста над уровнем моря. Добавить все проверки и ограничения.
 ```sql
 select LPAD(40::TEXT, 4, '0')
 ```
+3. Создаем таблицу для хранения констант для расчетов `measurment_settings`
+```sql
+CREATE TABLE IF NOT EXISTS public.measurment_settings
+(
+    key character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    value character varying(255) COLLATE pg_catalog."default",
+    description text COLLATE pg_catalog."default",
+    CONSTRAINT measurment_settings_pkey PRIMARY KEY (key)
+)
+
+TABLESPACE pg_default;
+```
+4. Добавляем данные в таблицу `measurment_settings`
+```sql
+truncate table public.measurment_settings;
+insert into public.measurment_settings(key, value, description)
+values('temperature_15','15.9','Табличное значение наземной температуры'),
+('pressure_750','750','Табличное значения наземного давления');
+```
+5. Создаем таблицу `ref_devices_type` - список устройств измерения метрологических данных
+```sql
+insert into public.ref_devices_type(short_name, description)
+values('ВР','Ветровое ружье'),
+('ДМК','Десантно метео комплекс');
+```
+
+**Задание:**
+> Создать функцию для расчета отклонения наземного давления $ΔНо$ - `fn_calc_pressure`<br>
+> Создать функцию для расчета отклонения наземной температы $ΔT_{0}^{мп}$ - `fn_calc_temperature` <br>
+
+#### Домашнее задание
+1. Создать функцию которая сформирует заголовок в формте `ДДЧЧМ ВВВВ БББТТ` согласно техническому заданию <br>
+2. Написать `pgSQL` скрипт для проверки работы данной функции. Примеры брать из [технического задания](./_Docs/TechnicalTask.md)
+
+
 
 
 
