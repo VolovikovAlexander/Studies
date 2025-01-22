@@ -94,7 +94,7 @@ END$$;
 
 
 #### Интерполяция (`Занятие 2`)
-> Цель: Ознакомить слушателей с основными приемами разработки pgSQL
+> Цель: Ознакомить слушателей с основными приемами разработки pgSQL и реализовать функцию линейной интерполяции
 1. Согласно [технического задания](./_Docs/TechnicalTask.md) необходимо разработать разработать алгоритм линейной интерполяции.
 2. Добавим новую таблицу со справочником виртуальным поправок на температуру `calc_temperatures_correction` - **Таблица 1**
 ```sql
@@ -193,6 +193,7 @@ CREATE TYPE public.interpolation_batch AS
 4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
 ####  Приближенный (`Занятие 3`)
+> Цель: Реализовать расчет данных заголовка Метео-11
 1. Создаем SQL функцию для преобразования даты времени в строковое значение `ДДЧЧММ` 
 ```sql
 
@@ -257,6 +258,57 @@ values('ВР','Ветровое ружье'),
 2. Написать `pgSQL` скрипт для проверки работы данной функции. Примеры брать из [технического задания](./_Docs/TechnicalTask.md)
 3. Перенести все настройки в таблицу `measurment_settings`. Написать скрипт переноса и сделать рефакторинг <br> 
 > 1. Создать таблицу с настройками для проверки входных данных. В рамках данной таблицы нужно хранить **все** `константы`
+
+####  Расчеты (`Занятие 4`)
+> Цель: Подготовить таблицы и структуры для дальнейшей реализации расчетов Метео-11
+1. Создадим таблицу для описания списка высот 'default_calc_heights'
+
+```sql
+
+CREATE TABLE IF NOT EXISTS public.default_calc_heights
+(
+    id bigint NOT NULL DEFAULT nextval('seq_default_calc_heights'::regclass),
+    height bigint NOT NULL,
+    CONSTRAINT default_calc_heights_pkey PRIMARY KEY (id)
+)
+
+```
+
+2. Создадим таблицу `default_calc_temperature_corrections` (**Таблица 1**) для хранения информации о [среднем отклонении температуры воздуха](./_Docs/AlgoritmDmk.md)
+```sql
+CREATE TABLE IF NOT EXISTS public.default_calc_temperature_corrections
+(
+    default_calc_height_id bigint NOT NULL,
+    data bigint[] NOT NULL,
+    is_positive boolean NOT NULL DEFAULT true
+)
+```
+3. Добавим связь между таблицами и ограничения по первичному ключу - **составной ключ** (`default_calc_height_id`, `is_positive`)
+4. Создадим скрипт для наполнения данных в таблицы: `default_calc_heights`, `default_calc_temperature_corrections`
+```sql
+-- Список табличных высот
+insert into public.default_calc_heights(height) values(200), (400), (800), (1200), (1600), (2000), (2400), (3000), (4000);
+-- select * from default_calc_heights
+
+-- Положительные значения для высоты 200
+insert into public.default_calc_temperature_corrections(default_calc_height_id, data, is_positive)
+values(1, array[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], True);
+-- select * from default_calc_temperature_corrections
+```
+
+**Задание:**
+> Дописать скрипт для добавления записей в таблицу `default_calc_temperature_corrections`. Положительные и отрицательные значения.
+> Написать SQL запрос на удаление любой высоты. Продемонстрировать результат.
+
+5. Добавим связь с типом измерительного оборудования, таблица `ref_devices_type` и обновим текущие записи в таблице `default_calc_temperature_corrections`
+
+#### Домашнее задание
+1. Дописать pgSQL скрипт. Включить в него создание таблиц и наполнения для всех типов устройств
+2. Создать таблицу для учета [`Скорости среднего ветра`](./Docs/AlgoritmBp.md)(**Таблица 3**) для расчета с помощью ветрового ружья
+ 
+
+ 
+
 
 
 
