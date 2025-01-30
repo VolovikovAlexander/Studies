@@ -20,8 +20,47 @@
 > Цель: Ознакомить слушателей с основными элементами SQL. 
 
 1. [Запускаем Postgres в Docker среде](./_Infra)
-2. Создаем локально базу данных `Meteo11`
-3. Создаем первые справочники. Изучаем синтаксис запросов SQL
+2. Краткий теоретический материал
+```
+DDL, DML, DCL, TCL
+```
+**DDL** - Data Definition Language, управление структурой базы данных
+**DML** - Data Manipulation Language, управление данными
+**DCL** - Data Control Language. управление доступом
+**TCL** - Transaction Control Language, управление транзакциями
+
+3. Создаем пробные таблицы. Учимся работыть с DDL командами
+```sql
+create table public.table1
+(
+    id bigint NOT NULL ,
+    foreign_key bigint NOT NULL,
+	CONSTRAINT table1_pkey PRIMARY KEY (id)
+);
+
+create table public.table2
+(
+	id bigint NOT NULL,
+	description text,
+	CONSTRAINT table2_pkey PRIMARY KEY (id)
+);
+
+
+```
+
+4. Добавляем пробные записи. Учимся работать с DML командами
+
+**Задание**
+> Самостоятельно при прмощи команд DDL создать структуру базы данных для текущего решения. <br>
+> История измерений, Набор параметров, Типы измерителей <br>
+
+5. Создаем локально базу данных `Meteo11`
+	* measurment_params
+	* measurment_types
+	* measurement_batch
+ 
+
+6. Начало работы с PgSQL. Пакетные скрипты 
 
 ```sql
 DO $$
@@ -37,7 +76,6 @@ if not exists (select 1 from public.measurment_types where id = 2) then
 	insert into public.measurment_types(id, short_name, description) values(2, 'ВР', 'Ветровое ружье');
 end if;
 
---select * from public.measurment_types
 
 END$$;
 ```
