@@ -21,23 +21,23 @@
 
 1. [Запускаем Postgres в Docker среде](./_Infra)
 - Принципы ACID (Принципы ACID предоставили разработчикам и пользователям стандартизированный подход к пониманию и обеспечению надёжности транзакций)
-
-**Atomicity (Атомарность)** - Транзакция должна выполняться целиком либо не выполняться вовсе.
-**Consistency (Целостность)** - После завершения транзакции данные должны быть согласованными.
-**Isolation (Изолированность)** - Одновременно выполняющиеся транзакции не должны влиять друг на друга.
-**Durability (Долговечность)** - После завершения транзакции результаты должны быть сохранены и иметь возможность восстановиться после сбоя
+<br>
+**Atomicity (Атомарность)** - Транзакция должна выполняться целиком либо не выполняться вовсе.<br>
+**Consistency (Целостность)** - После завершения транзакции данные должны быть согласованными.<br>
+**Isolation (Изолированность)** - Одновременно выполняющиеся транзакции не должны влиять друг на друга. <br>
+**Durability (Долговечность)** - После завершения транзакции результаты должны быть сохранены и иметь возможность восстановиться после сбоя <br>
 
 2. Краткий теоретический материал
 ```
 DDL, DML, DCL, TCL
 ```
 
-**DDL** - Data Definition Language, управление структурой базы данных
-**DML** - Data Manipulation Language, управление данными
-**DCL** - Data Control Language. управление доступом
-**TCL** - Transaction Control Language, управление транзакциями
+**DDL** - Data Definition Language, управление структурой базы данных <br>
+**DML** - Data Manipulation Language, управление данными <br>
+**DCL** - Data Control Language. управление доступом <br>
+**TCL** - Transaction Control Language, управление транзакциями <br>
 
-3. Создаем пробные таблицы. Учимся работыть с DDL командами
+3. Создаем пробные таблицы. Учимся работать с `DDL` командами
 ```sql
 create table public.table1
 (
@@ -56,7 +56,7 @@ create table public.table2
 
 ```
 
-4. Добавляем пробные записи. Учимся работать с DML командами
+4. Добавляем пробные записи. Учимся работать с `DML` командами
 
 **Задание**
 > Самостоятельно при прмощи команд DDL создать структуру базы данных для текущего решения. <br>
@@ -399,7 +399,7 @@ end $$
 
 **Задание:**
 > Создать функцию для расчета отклонения наземного давления $ΔНо$ - `fn_calc_pressure`<br>
-> Написать pgSQL который выполнит вычисления `отклонения наземного давления ($ΔНо$)` и ``отклонение наземной виртуальной температуры от табличного ($ΔT_{0}^{мп}$)` по данным
+> Написать pgSQL который выполнит вычисления `отклонения наземного давления ($ΔНо$)` и `отклонение наземной виртуальной температуры от табличного ($ΔT_{0}^{мп}$)` по данным
 > из таблицы measurment_params <br> 
 
 
@@ -411,7 +411,7 @@ end $$
 
 ###  Подготовка к расчетам (`Занятие 4`)
 > Цель: Подготовить таблицы и структуры для дальнейшей реализации расчетов Метео-11
-1. Создадим таблицу для описания списка высот 'default_calc_heights'
+1. Создадим таблицу для описания списка высот `default_calc_heights`
 
 ```sql
 
@@ -424,9 +424,9 @@ CREATE TABLE IF NOT EXISTS public.default_calc_heights
 
 ```
 
-2. Создадим таблицу `default_calc_temperature_corrections` (**Таблица 1**) для хранения информации о [среднем отклонении температуры воздуха](./_Docs/AlgoritmDmk.md)
+2. Создадим таблицу `calc_temperatures` (**Таблица 1**) для хранения информации о [среднем отклонении температуры воздуха](./_Docs/AlgoritmDmk.md)
 ```sql
-CREATE TABLE IF NOT EXISTS public.default_calc_temperature_corrections
+CREATE TABLE IF NOT EXISTS public.calc_temperatures
 (
     default_calc_height_id bigint NOT NULL,
     data bigint[] NOT NULL,
@@ -437,18 +437,34 @@ CREATE TABLE IF NOT EXISTS public.default_calc_temperature_corrections
 4. Создадим скрипт для наполнения данных в таблицы: `default_calc_heights`, `default_calc_temperature_corrections`
 ```sql
 -- Список табличных высот
-insert into public.default_calc_heights(height) values(200), (400), (800), (1200), (1600), (2000), (2400), (3000), (4000);
--- select * from default_calc_heights
+insert into public.calc_heights(height) values(200), (400), (800), (1200), (1600), (2000), (2400), (3000), (4000);
+-- select * from calc_heights
 
 -- Положительные значения для высоты 200
-insert into public.default_calc_temperature_corrections(default_calc_height_id, data, is_positive)
+insert into public.calc_temperatures(default_calc_height_id, data, is_positive)
 values(1, array[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], True);
--- select * from default_calc_temperature_corrections
+
+-- Отрицательные значения для высоты 200
+insert into public.calc_temperatures(default_calc_height_id, data, is_positive)
+values(1, array[-1, -2, -3, -4, -5, -6, -7, -8, -8, -9, -20, -29, -39, -49 ], False);
+
+-- select * from calc_temperatures
 ```
 
 **Задание:**
-> Дописать скрипт для добавления записей в таблицу `default_calc_temperature_corrections`. Положительные и отрицательные значения. <br>
+> Дописать скрипт для добавления записей в таблицу `calc_temperatures`. Положительные и отрицательные значения. <br>
 > Написать SQL запрос на удаление любой высоты. Продемонстрировать результат.<br>
+
+5. Сделаем связку данной таблицы с таблицей описывающих типы устройств `measurment_types`
+```sql
+alter table public.calc_temperatures
+add column measurment_type_id integer
+
+alter table calc_temperatures
+add constraint measurment_types_fk 
+foreign key (measurment_type_id)
+references public.measurment_types (id);
+```
 
 
 #### Домашнее задание
