@@ -228,14 +228,46 @@ CREATE TYPE public.interpolation_batch AS
 > Создать функцию `fn_calc_temperatures_correction` с использованием типа `interpolation_batch`  <br>
 > Изменить текущую реализацию текущей функции `fn_calc_temperatures_correction` <br>
 
+6. Написать pgSQL скрипт, который в цикле будет считать интерполяцию.
+Пример
+```sql
+do $$
+declare
+   var_min_temperature numeric(8,2);
+   var_max_temperature numeric(8,2);
+   var_step numeric(8,2) default 0.002;
+   var_current_temperature numeric(8,2) ;
+   var_calc_param public.input_data_meteo11;
+   var_correction numeric(8,2);
+begin
+
+	-- Получить период
+	select min(temperature), max(temperature) 
+	into var_min_temperature, var_max_temperature
+	from public.calc_temperatures_correction;
+
+	-- Рассчитать интерполяцию
+	for var_current_temperature IN var_min_temperature..var_max_temperature loop
+	begin
+		var_calc_param.temperature := var_current_temperature;
+		var_correction := public.fn_calc_temperature(var_calc_param);
+		RAISE NOTICE 'temperature %, correction %', var_current_temperature, var_correction;
+		var_current_temperature := var_current_temperature + var_step;
+	end;
+	end loop;
+	
+end$$
+```
+
 #### Домашнее задание
+** Написать на языке python скрипт для расчета интерполяции.
 1. Создать таблицу с настройками для проверки входных данных. В рамках данной таблицы нужно хранить **все** `константы`
 - `Температура`. Минимальное значение **-58**, максимальное **58**, указывается в цельсиях
 - `Давления`.  Минимальное значение **500**, максимальное **900**, указывается в мм рт ст
 - `Направление ветра`. Минимальное значение **0**,максимальное значение **59** <br>
   и т.д.
 
-2. Создать собственный тип данных для передахи входных параметров 
+2. Создать собственный тип данных для передачи входных параметров 
 3. Написать собственную функцию на вход должны подаваться входные параметры, а на выходе собственный тип данных.
 4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
