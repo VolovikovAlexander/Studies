@@ -228,7 +228,8 @@ CREATE TYPE public.interpolation_batch AS
 > Создать функцию `fn_calc_temperatures_correction` с использованием типа `interpolation_batch`  <br>
 > Изменить текущую реализацию текущей функции `fn_calc_temperatures_correction` <br>
 
-6. Написать pgSQL скрипт, который в цикле будет считать интерполяцию.
+6. Работа с циклами. Создадим pgSQL скрипт который будет выводить в цикла сообщение 
+
 Пример
 ```sql
 do $$
@@ -241,16 +242,12 @@ declare
    var_correction numeric(8,2);
 begin
 
-	-- Получить период
-	select min(temperature), max(temperature) 
-	into var_min_temperature, var_max_temperature
-	from public.calc_temperatures_correction;
+        var_min_temperature := 0;
+	var_max_temperature := 10;
 
-	-- Рассчитать интерполяцию
+
 	for var_current_temperature IN var_min_temperature..var_max_temperature loop
 	begin
-		var_calc_param.temperature := var_current_temperature;
-		var_correction := public.fn_calc_temperature(var_calc_param);
 		RAISE NOTICE 'temperature %, correction %', var_current_temperature, var_correction;
 		var_current_temperature := var_current_temperature + var_step;
 	end;
@@ -258,10 +255,13 @@ begin
 	
 end$$
 ```
+**Задание:**
+1. Написать pgSQL срипт для расчета интерполяции на всем диаппазоне температур с шагом **0.1 С**
+
 
 #### Домашнее задание
-** Написать на языке python скрипт для расчета интерполяции.
-1. Создать таблицу с настройками для проверки входных данных. В рамках данной таблицы нужно хранить **все** `константы`
+1. Создать таблицу с настройками для проверки входных данных `measure_settings`
+ В рамках данной таблицы нужно хранить **все** `константы`
 - `Температура`. Минимальное значение **-58**, максимальное **58**, указывается в цельсиях
 - `Давления`.  Минимальное значение **500**, максимальное **900**, указывается в мм рт ст
 - `Направление ветра`. Минимальное значение **0**,максимальное значение **59** <br>
@@ -269,7 +269,8 @@ end$$
 
 2. Создать собственный тип данных для передачи входных параметров 
 3. Написать собственную функцию на вход должны подаваться входные параметры, а на выходе собственный тип данных.
-4. Функция должна проверять входные параметры. При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
+4. Функция должна проверять входные параметры. 
+При нарушении граничных параметров формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
 ###  Приближенный (`Занятие 3`)
 > Цель: Реализовать расчет данных заголовка Метео-11
@@ -302,39 +303,15 @@ select public.fn_calc_period(now());
 ```sql
 select LPAD(40::TEXT, 4, '0')
 ```
-3. Создаем таблицу для хранения констант для расчетов `measurment_settings`
-```sql
-CREATE TABLE IF NOT EXISTS public.measurment_settings
-(
-    key character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    value character varying(255) COLLATE pg_catalog."default",
-    description text COLLATE pg_catalog."default",
-    CONSTRAINT measurment_settings_pkey PRIMARY KEY (key)
-)
-
-TABLESPACE pg_default;
-```
-4. Добавляем данные в таблицу `measurment_settings`
+3. Добавляем данные в таблицу `measurment_settings`
 ```sql
 truncate table public.measurment_settings;
 insert into public.measurment_settings(key, value, description)
 values('temperature_15','15.9','Табличное значение наземной температуры'),
 ('pressure_750','750','Табличное значения наземного давления');
 ```
-5. Создаем тип данных `input_data_batch`
 
-```sql
-CREATE TYPE public.input_data_batch AS
-(
-	device_type_id bigint,
-	height numeric(8,2),
-	temperature numeric(8,2),
-	pressure numeric(8,2),
-	wind_speed numeric(8,2)
-);
-```
-
-6. Создаем функцию для расчета `Отклонение наземной виртуальной температуры от табличного` ($ΔT_{0}^{мп}$) - fn_calc_temperature
+4. Создаем функцию для расчета `Отклонение наземной виртуальной температуры от табличного` ($ΔT_{0}^{мп}$) - fn_calc_temperature
 
 ```sql
 CREATE OR REPLACE FUNCTION public.fn_calc_temperature(
@@ -439,16 +416,14 @@ end $$
 #### Домашнее задание
 1. Создать функцию которая сформирует заголовок в формте `ДДЧЧМ ВВВВ БББТТ` согласно техническому заданию <br>
 2. Написать `pgSQL` скрипт для проверки работы данной функции. Примеры брать из [технического задания](./_Docs/TechnicalTask.md)
-3. Перенести все настройки в таблицу `measurment_settings`. Написать скрипт переноса и сделать рефакторинг <br> 
-> 1. Создать таблицу с настройками для проверки входных данных. В рамках данной таблицы нужно хранить **все** `константы`
 
 ###  Подготовка к расчетам (`Занятие 4`)
 > Цель: Подготовить таблицы и структуры для дальнейшей реализации расчетов Метео-11
-1. Создадим таблицу для описания списка высот `default_calc_heights`
+1. Создадим таблицу для описания списка высот `calc_heights`
 
 ```sql
 
-CREATE TABLE IF NOT EXISTS public.default_calc_heights
+CREATE TABLE IF NOT EXISTS public.calc_heights
 (
     id bigint NOT NULL DEFAULT nextval('seq_default_calc_heights'::regclass),
     height bigint NOT NULL,
@@ -467,7 +442,7 @@ CREATE TABLE IF NOT EXISTS public.calc_temperatures
 )
 ```
 3. Добавим связь между таблицами и ограничения по первичному ключу - **составной ключ** (`default_calc_height_id`, `is_positive`)
-4. Создадим скрипт для наполнения данных в таблицы: `default_calc_heights`, `default_calc_temperature_corrections`
+4. Создадим скрипт для наполнения данных в таблицы: `calc_heights`, `calc_temperature_corrections`
 ```sql
 -- Список табличных высот
 insert into public.calc_heights(height) values(200), (400), (800), (1200), (1600), (2000), (2400), (3000), (4000);
@@ -487,8 +462,7 @@ values(1, array[-1, -2, -3, -4, -5, -6, -7, -8, -8, -9, -20, -29, -39, -49 ], Fa
 **Задание:**
 > Дописать скрипт для добавления записей в таблицу `calc_temperatures`. Положительные и отрицательные значения. <br>
 > Написать SQL запрос на удаление любой высоты. Продемонстрировать результат.<br>
-
-5. Сделаем связку данной таблицы с таблицей описывающих типы устройств `measurment_types`
+> Написать SQL скрипт для создания связки данной таблицы с таблицей описывающих типы устройств `measurment_types`
 ```sql
 alter table public.calc_temperatures
 add column measurment_type_id integer
@@ -503,9 +477,16 @@ references public.measurment_types (id);
 #### Домашнее задание
 1. Дописать pgSQL скрипт. Включить в него создание таблиц и наполнения для всех типов устройств
 2. Создать таблицу для учета [`Скорости среднего ветра`](./Docs/AlgoritmBp.md)(**Таблица 3**) для расчета с помощью ветрового ружья
- 
+3. Написать pgSQL срипт, который сформирует таблицу вида в формате HTML с использованием таблицы `calc_heights`:
+
+| Высота   | Среднее отклонение температуры воздуха | Дирекционный угол направления ветра | Скорость среднего ветра | Тип устройства |
+|----------|----------------------------------------|-------------------------------------|-------------------------|----------------|
+| 200      | 0                                      | 0                                   | 0                       | ДМК            |
+
+   
 
  
+
 
 
 
