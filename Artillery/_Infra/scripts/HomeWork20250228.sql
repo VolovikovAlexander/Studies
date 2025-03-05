@@ -44,6 +44,10 @@ begin
 
 	alter table if exists public.calc_header_correction
 	drop constraint  if exists measurment_type_id_fk;
+
+	alter table if exists public.calc_wind_speed_height_correction
+	drop constraint if exists calc_wind_speed_height_correction_calc_height_id_fk;
+
 	
 	-- Таблицы
 	drop table if exists public.measurment_input_params;
@@ -56,6 +60,7 @@ begin
 	drop table if exists public.calc_temperature_correction;
 	drop table if exists public.calc_temperature_height_correction;
 	drop table if exists public.calc_header_correction;
+	drop table if exists public.calc_wind_speed_height_correction;
 
 	-- Нумераторы
 	drop sequence if exists public.measurment_input_params_seq cascade;
@@ -66,6 +71,7 @@ begin
 	drop sequence if exists public.calc_height_correction_seq cascade;
 	drop sequence if exists public.calc_temperature_height_correction_seq cascade;
 	drop sequence if exists public.calc_header_correction_seq cascade;
+	drop sequence if exists public.calc_wind_speed_height_correction_seq cascade;
 end;
 
 raise notice 'Удаление старых данных выполнено успешно';
@@ -233,9 +239,21 @@ create type temperature_correction as
 (
 	calc_height_id integer,
 	height integer,
-	deviation integer
+	-- Приращение по температуре
+	temperature_deviation integer
 );
 
+-- Результат расчета скорости среднего ветра и приращение среднего ветра
+drop type if exists wind_direction_correction cascade;
+create type wind_direction_correction as
+(
+	calc_height_id integer,
+	height integer,
+	-- Приращение по скорости ветра
+	wind_speed_deviation integer,
+	-- Приращение среднего ветра
+	wind_deviation integer
+);
 
 
 -- Таблица заголовков к поправочных таблицам
@@ -284,6 +302,22 @@ create table calc_temperature_height_correction
 	negative_values numeric[]
 );
 
+-- Данные для ветрового ружья
+insert into calc_temperature_height_correction(calc_height_id, calc_temperature_header_id, positive_values, negative_values)
+values
+(10,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[ -1, -2, -3, -4, -5, -6, -7, -8, -8, -9, -20, -29, -39, -49]), --200
+(11,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -3, -4, -5, -6, -6, -7, -8, -9, -19, -29, -38, -48]), --400
+(12,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -3, -4, -5, -6, -6, -7, -7, -8, -18, -28, -37, -46]), --800
+(13,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -3, -4, -4, -5, -5, -6, -7, -8, -17, -26, -35, -44]), --1200
+(14,1,array[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -3, -3, -4, -4, -5, -6, -7, -7, -17, -25, -34, -42]), --1600
+(15,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -3, -3, -4, -4, -5, -6, -6, -7, -16, -24, -32, -40]), --2000
+(16,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -2, -3, -4, -4, -5, -5, -6, -7, -15, -23, -31, -38]), --2400
+(17,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -2, -3, -4, -4, -4, -5, -5, -6, -15, -22, -30, -37]), --3000
+(18,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[ -1, -2, -2, -3, -4, -4, -4, -4, -5, -6, -14, -20, -27, -34]); --4000
+
+
+
+-- Данные для ДМК
 insert into calc_temperature_height_correction(calc_height_id, calc_temperature_header_id, positive_values, negative_values)
 values
 (1,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[ -1, -2, -3, -4, -5, -6, -7, -8, -8, -9, -20, -29, -39, -49]), --200
@@ -295,7 +329,35 @@ values
 (7,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -2, -3, -4, -4, -5, -5, -6, -7, -15, -23, -31, -38]), --2400
 (8,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[-1, -2, -2, -3, -4, -4, -4, -5, -5, -6, -15, -22, -30, -37]), --3000
 (9,1,array[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], array[ -1, -2, -2, -3, -4, -4, -4, -4, -5, -6, -14, -20, -27, -34]); --4000
-	
+
+
+-- Таблица 3 корректировка сноса пуль
+-- Для расчета приращение среднего ветра относительно направления приземного ветра
+create sequence calc_wind_speed_height_correction_seq;
+drop table if exists calc_wind_speed_height_correction;
+create table calc_wind_speed_height_correction
+(
+	id integer not null primary key default nextval('public.calc_wind_speed_height_correction_seq'),
+	calc_height_id integer not null,
+	values integer[] not null,
+	delta integer not null
+);
+
+-- Для ветрового ружья
+insert into calc_wind_speed_height_correction(calc_height_id, values, delta)
+values
+(10, array[3, 4, 5, 6, 7, 7, 8, 9, 10, 11, 12, 12], 0),	-- 200
+(11, array[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 1),-- 400
+(12, array[4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16], 2), -- 800
+(13, array[4, 5, 7, 8, 8, 9, 11, 12, 13, 15, 15, 16], 2), -- 1200
+(14, array[4, 6, 7, 8, 9, 10, 11, 13, 14, 15, 17, 17], 3), -- 1600
+(15, array[4, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 18], 3), -- 2000
+(16, array[4, 6, 8, 9, 9, 10, 12, 14, 15, 16, 18, 19], 3), -- 2400
+(17, array[5, 6, 8, 9, 10, 11, 12, 14, 15, 17, 18, 19], 4), -- 3000
+(18, array[5, 6, 8, 9, 10, 11, 12, 14, 16, 18, 19, 20],4) -- 4000
+;
+
+
 	  
 raise notice 'Расчетные структуры сформированы';
 
@@ -353,6 +415,12 @@ begin
 	foreign key(military_rank_id)
 	references public.military_ranks (id);
 
+	-- Связь между высотами и таблицей корректировки сноса пуль
+	alter table public.calc_wind_speed_height_correction
+	add constraint calc_wind_speed_height_correction_calc_height_id_fk
+	foreign key(calc_height_id)
+	references public.calc_height_correction (id);
+
 end;
 
 raise notice 'Связи сформированы';
@@ -408,13 +476,20 @@ $BODY$;
 drop function if exists public.fn_calc_header_period;
 create function public.fn_calc_header_period(
 	par_period timestamp with time zone)
-    RETURNS text
-    LANGUAGE 'sql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-
-RETURN ((((CASE WHEN (EXTRACT(day FROM par_period) < (10)::numeric) THEN '0'::text ELSE ''::text END || (EXTRACT(day FROM par_period))::text) || CASE WHEN (EXTRACT(hour FROM par_period) < (10)::numeric) THEN '0'::text ELSE ''::text END) || (EXTRACT(hour FROM par_period))::text) || "left"(CASE WHEN (EXTRACT(minute FROM par_period) < (10)::numeric) THEN '0'::text ELSE (EXTRACT(minute FROM par_period))::text END, 1));
-
+    returns text
+    language 'sql'
+return  
+		-- ДД
+		case when (extract(day from par_period) < 10::numeric) then '0'::text else ''::text end || 
+		extract(day from par_period)::text || 
+		-- ЧЧ
+		case when (extract(hour from par_period) < 10::numeric) then '0'::text else ''::text end || 
+		extract(hour from par_period)::text || 
+		-- Десятки минут
+		case when (extract(minute from par_period) < 10::numeric) then '0'::text
+				else 
+					left(extract(minute from par_period)::text, 1) 
+		end;
 
 -- Функция для расчета отклонения наземного давления
 drop function if exists public.fn_calc_header_pressure;
@@ -875,7 +950,7 @@ if not exists (
 
 			var_correction.calc_height_id := var_row.calc_height_id;
 			var_correction.height := var_row.height;
-			var_correction.deviation := var_deviation;
+			var_correction.temperature_deviation := var_deviation;
 			par_corrections := array_append(par_corrections, var_correction);
 	end loop;
 
