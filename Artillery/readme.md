@@ -39,24 +39,6 @@ DDL, DML, DCL, TCL
 **TCL** - Transaction Control Language, управление транзакциями <br>
 
 3. Создаем пробные таблицы. Учимся работать с `DDL` командами
-```sql
-create table public.table1
-(
-    id bigint NOT NULL ,
-    foreign_key bigint NOT NULL,
-	CONSTRAINT table1_pkey PRIMARY KEY (id)
-);
-
-create table public.table2
-(
-	id bigint NOT NULL,
-	description text,
-	CONSTRAINT table2_pkey PRIMARY KEY (id)
-);
-
-
-```
-
 4. Добавляем пробные записи. Учимся работать с `DML` командами
 
 **Задание**
@@ -71,63 +53,20 @@ create table public.table2
 
 6. Начало работы с PgSQL. Пакетные скрипты 
 
-```sql
-DO $$
-BEGIN
-
--- Скрипт наполнения основных параметров
-if not exists (select 1 from public.measurment_types where id = 1) then
-	insert into public.measurment_types(id, short_name, description) values(1, 'ДМК', 'Десантный метео комплект');
-end if;
-
-
-if not exists (select 1 from public.measurment_types where id = 2) then
-	insert into public.measurment_types(id, short_name, description) values(2, 'ВР', 'Ветровое ружье');
-end if;
-
-
-END$$;
-```
 
 **Задание:**
 > Необходимо по аналогии добавить различные данные в таблицу `measurment_types` в том числе с одинаковым кодом.
 > Удалить лишние данные. Оставить только две исходные записи.
 > Скрипт с заданием сохранить в виде файла.
 
-4. Подключаем `sequences`
-```sql
-DO $$
-BEGIN
-	
-	-- Подключаем инкремент в таблицы справочники
-	alter table public.measurement_batch alter column id set default nextval('public.measurment_batch_seq');
-	alter table public.measurment_params alter column id set default nextval('public.measurment_params_seq');
-
-END$$;
-```
+7. Подключаем `sequences`
 
 **Задание:**
 > Необходимо выполнить вставку данных в таблицы `measurement_batch`, `measurment_params`. Далее, удалить и убедится, что `sequences` назначили новый код.
 > Убрать `DEFAULT` значение в таблицах. Удалить `sequences`, создать заново и привязать
 > Скрипт с заданием сохранить в виде файла.
 
-5. Подключаем внешние ключи
-```sql
-DO $$
-BEGIN
-
- -- Свяжем две таблицы measurment_params и measurement_batch
- alter table public.measurment_params 
- add constraint fk_measurment_param_measurement_batch_id foreign key (measurment_batch_id)
- references public.measurement_batch(id);
-
- -- Свяжем две таблицы measurment_params и measurment_types
- alter table public.measurment_params 
- add constraint fk_measurment_param_measurment_types foreign key (measurment_type_id)
- references public.measurment_types(id);
- 
-END$$;
-```
+8. Подключаем внешние ключи
 
 **Задание:**
 > Необходимо заполнить данными таблицу `measurment_params` с учетом связей.
@@ -144,17 +83,6 @@ END$$;
 > Цель: Ознакомить слушателей с основными приемами разработки pgSQL и реализовать функцию линейной интерполяции
 1. Согласно [технического задания](./_Docs/TechnicalTask.md) необходимо разработать разработать алгоритм линейной интерполяции.
 2. Добавим новую таблицу со справочником виртуальным поправок на температуру `calc_temperatures_correction` - **Таблица 1**
-```sql
-DO $$
-BEGIN
-
-	truncate table public.calc_temperatures_correction;
-	insert into public.calc_temperatures_correction(temperature, correction)
-	Values(0, 0.5),(5, 0.5),(10, 1), (20,1), (25, 2), (30, 3.5), (40, 4.5);
-
-	-- select * from  public.calc_temperatures_correction;
-END$$;
-```
 3. Создадим SQL запрос для расчета интерполяции по таблице `calc_temperatures_correction`. 
 Формула:
 > $D = X_{1} - X_{0}$ <br>
@@ -166,47 +94,12 @@ END$$;
  - $Y_{1}$ - правая чась поправки
  - $Y_{0}$ - левая часть поправки
 
-```sql
-	-- Получим 5 градусов
-	select Temperature from  public.calc_temperatures_correction
-	where  Temperature < 8 order by Temperature desc limit 1;
-```
-
 **Задание:**
 > Написать SQL запрос для получение $X_{1}$,  $X_{0}$,  $Y_{1}$ ,  $Y_{0}$ <br>
 > Написать SQL запрос расчета линейной интерполяции <br>
 
 3. Добавим функцию для расчета линейной интерполяции.
-```sql
-CREATE OR REPLACE FUNCTION public.fn_calc_temperatures_correction(
-    -- Значение для которого нужно посчитать интерполяцию
-	par_x numeric(8,2),
-	par_x0 numeric(8,2),
-	par_x1 numeric(8,2),
-	par_y0 numeric(8,2),
-	par_y1 numeric(8,2))
-    RETURNS numeric
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-AS $BODY$
-declare
-	denominator numeric(8,2) default 0;
-	correction numeric(8,2) default 0;
-begin
-	denominator := par_x1 - par_x0;
-	correction := (par_x - par_x0) * (par_y1 - par_y0) / denominator + par_y0;
-	
-	return correction;
-
-end
-$BODY$;
-```
 4. Меняем SQL запрос для получения  $X_{1}$,  $X_{0}$,  $Y_{1}$ ,  $Y_{0}$ с использованием функции.
-Пример:
-```sql
-select public.fn_calc_temperatures_correction(8, 5, 10, 0.5, 1);
-```
 
 **Задание**
 > Добавить в функцию проверку аргументов. $X > X_{0} < X_{1}$ <br>
@@ -214,15 +107,6 @@ select public.fn_calc_temperatures_correction(8, 5, 10, 0.5, 1);
 > Провери должны формировать [raise error](https://www.postgresql.org/docs/current/plpgsql-errors-and-messages.html)
 
 5. Создаем собственный тип данных. 
-```sql
-CREATE TYPE public.interpolation_batch AS
-(
-	x0 numeric(8,2),
-	x1 numeric(8,2),
-	y0 numeric(8,2),
-	y1 numeric(8,2)
-);
-```
 
 **Задание:**
 > Создать функцию `fn_calc_temperatures_correction` с использованием типа `interpolation_batch`  <br>
@@ -230,31 +114,6 @@ CREATE TYPE public.interpolation_batch AS
 
 6. Работа с циклами. Создадим pgSQL скрипт который будет выводить в цикла сообщение 
 
-Пример
-```sql
-do $$
-declare
-   var_min_temperature numeric(8,2);
-   var_max_temperature numeric(8,2);
-   var_step numeric(8,2) default 0.002;
-   var_current_temperature numeric(8,2) ;
-   var_calc_param public.input_data_meteo11;
-   var_correction numeric(8,2);
-begin
-
-        var_min_temperature := 0;
-	var_max_temperature := 10;
-
-
-	for var_current_temperature IN var_min_temperature..var_max_temperature loop
-	begin
-		RAISE NOTICE 'temperature %, correction %', var_current_temperature, var_correction;
-		var_current_temperature := var_current_temperature + var_step;
-	end;
-	end loop;
-	
-end$$
-```
 **Задание:**
 1. Написать pgSQL срипт для расчета интерполяции на всем диаппазоне температур с шагом **0.1 С**
 
@@ -275,137 +134,14 @@ end$$
 ###  Приближенный (`Занятие 3`)
 > Цель: Реализовать расчет данных заголовка Метео-11
 1. Создаем SQL функцию для преобразования даты времени в строковое значение `ДДЧЧММ` 
-```sql
 
-CREATE OR REPLACE FUNCTION public.fn_calc_period(
-	par_period timestamp with time zone)
-    RETURNS text
-    LANGUAGE 'sql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-
-RETURN  extract(day from par_period)::text || extract(hour from par_period)::text ||  extract(minute from par_period):: text;
-
-ALTER FUNCTION public.fn_calc_period(timestamp with time zone)
-    OWNER TO admin;
-```
-
-Пример
-```sql
-select fn_calc_period(CURRENT_TIMESTAMP);
-select public.fn_calc_period(now());
-```
 
 **Задание:**
 > Измеить функцию. Добавить проверку по дню < 10 и минуты < 10.
 
 2. Создаем SQL функция для расчета `ВВВВ` - высота расположения метеопоста над уровнем моря. Добавить все проверки и ограничения.
-```sql
-select LPAD(40::TEXT, 4, '0')
-```
 3. Добавляем данные в таблицу `measurment_settings`
-```sql
-truncate table public.measurment_settings;
-insert into public.measurment_settings(key, value, description)
-values('temperature_15','15.9','Табличное значение наземной температуры'),
-('pressure_750','750','Табличное значения наземного давления');
-```
-
 4. Создаем функцию для расчета `Отклонение наземной виртуальной температуры от табличного` ($ΔT_{0}^{мп}$) - fn_calc_temperature
-
-```sql
-CREATE OR REPLACE FUNCTION public.fn_calc_temperature(
-	input_data input_data_batch)
-    RETURNS numeric
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-AS $BODY$
-DECLARE
-	default_temperature numeric(8,2) default 15.9;
-	default_temperature_key character varying default 'temperature_15' ;
-	virtual_temperature numeric(8,2) default 0;
-	temperature_batch interpolation_batch;
-	deltaTv numeric(8,2) default 0;
-	t0 numeric(8,2) default 0;
-	"result" numeric(8,2) default 0;
-BEGIN	
-
-	-- Определим табличное значение температуры
-	Select coalesce(value::numeric(8,2), default_temperature) 
-	from public.measurment_settings 
-	into virtual_temperature
-	where 
-		key = default_temperature_key;
-
-	RAISE NOTICE 'virtual_temperature, %', virtual_temperature;	
-
-	-- Определяем виртуальную поправку 
-	-- 1. Определяем левый диаппазон
-	select
-		temperature,
-		correction
-	into 	
-		temperature_batch.x0, 
-		temperature_batch.y0
-	from public.calc_temperatures_correction
-	where 
-		temperature <= input_data.temperature
-	order by 	temperature desc
-	limit 1;
-
-	
-	-- 2. Определяем правый диаппазон
-	select
-		temperature,
-		correction
-	into 	
-		temperature_batch.x1, 
-		temperature_batch.y1
-	from public.calc_temperatures_correction
-	where 
-		temperature >= input_data.temperature
-	order by 	temperature 
-	limit 1;
-
-	RAISE NOTICE 'temperature_batch batch, %', temperature_batch;
-	RAISE NOTICE 'Correct %', public.fn_calc_temperatures_correction(par_x => input_data.temperature, par_batch => temperature_batch);
-	
-	
-    -- Вирутальная поправка
-	deltaTv := input_data.temperature + 
-		public.fn_calc_temperatures_correction(par_x => input_data.temperature, par_batch => temperature_batch);
-
-
-	-- Отклонение приземной виртуальной температуры
-	"result" := deltaTv - virtual_temperature;
-	
-	RETURN "result";
-END	
-$BODY$;
-```
-Пример для проверки
-**Входные данные*
-```sql
-do $$
-declare
-	input_data public.input_data_batch;
-	"result" numeric(8,2) default 0;
-begin
-	input_data.device_type_id := 1;
-	input_data.height := 2300;
-	input_data.temperature := 23;
-	input_data.pressure := 760;
-	input_data.wind_speed := 20;
-
-
-	select public.fn_calc_temperature(input_data => input_data)
-	into "result";
-	
-	raise notice 'result %', "result";
-	
-end $$
-```
 
 **Задание:**
 > Создать функцию для расчета отклонения наземного давления $ΔНо$ - `fn_calc_pressure`<br>
@@ -420,72 +156,38 @@ end $$
 ###  Подготовка к расчетам (`Занятие 4`)
 > Цель: Подготовить таблицы и структуры для дальнейшей реализации расчетов Метео-11
 1. Создадим таблицу для описания списка высот `calc_heights`
-
-```sql
-
-CREATE TABLE IF NOT EXISTS public.calc_heights
-(
-    id bigint NOT NULL DEFAULT nextval('seq_default_calc_heights'::regclass),
-    height bigint NOT NULL,
-    CONSTRAINT default_calc_heights_pkey PRIMARY KEY (id)
-)
-
-```
-
 2. Создадим таблицу `calc_temperatures` (**Таблица 1**) для хранения информации о [среднем отклонении температуры воздуха](./_Docs/AlgoritmDmk.md)
-```sql
-CREATE TABLE IF NOT EXISTS public.calc_temperatures
-(
-    default_calc_height_id bigint NOT NULL,
-    data bigint[] NOT NULL,
-    is_positive boolean NOT NULL DEFAULT true
-)
-```
-3. Добавим связь между таблицами и ограничения по первичному ключу - **составной ключ** (`default_calc_height_id`, `is_positive`)
-4. Создадим скрипт для наполнения данных в таблицы: `calc_heights`, `calc_temperature_corrections`
-```sql
--- Список табличных высот
-insert into public.calc_heights(height) values(200), (400), (800), (1200), (1600), (2000), (2400), (3000), (4000);
--- select * from calc_heights
-
--- Положительные значения для высоты 200
-insert into public.calc_temperatures(default_calc_height_id, data, is_positive)
-values(1, array[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 30, 30], True);
-
--- Отрицательные значения для высоты 200
-insert into public.calc_temperatures(default_calc_height_id, data, is_positive)
-values(1, array[-1, -2, -3, -4, -5, -6, -7, -8, -8, -9, -20, -29, -39, -49 ], False);
-
--- select * from calc_temperatures
-```
 
 **Задание:**
 > Дописать скрипт для добавления записей в таблицу `calc_temperatures`. Положительные и отрицательные значения. <br>
 > Написать SQL запрос на удаление любой высоты. Продемонстрировать результат.<br>
 > Написать SQL скрипт для создания связки данной таблицы с таблицей описывающих типы устройств `measurment_types`
-```sql
-alter table public.calc_temperatures
-add column measurment_type_id integer
 
-alter table calc_temperatures
-add constraint measurment_types_fk 
-foreign key (measurment_type_id)
-references public.measurment_types (id);
-```
+3. Формируем запрос для построения отчета: `Статистика по измерениям`. Отчет должен выводить информацию в следующем виде:
+
+| ФИО            | Звание           | Количество измерений   | Количество ошибочных измерений |
+|----------------|------------------|------------------------|--------------------------------|
+
+**Задание:**
+> Изменить запрос для отчета. Включить в запрос CTE и функцию для проверки входных данных.
+> Создать на основе данного запрос представление (view)
+
+4. Создадим набор таблиц для описания `среднего отклонения температуры воздуха` (Таблица 2) для Ветрового ружья. Создадим 
+отдельную таблицу для высот и для заголовка. Сделаем связи и заполним данными.
+4. Создадим PgSQL скрипт который будет считывать данные их Таблицы 2 и выводить их на консоль `raise notice`
+
 
 
 #### Домашнее задание
-1. Дописать pgSQL скрипт. Включить в него создание таблиц и наполнения для всех типов устройств
-2. Создать таблицу для учета [`Скорости среднего ветра`](./Docs/AlgoritmBp.md)(**Таблица 3**) для расчета с помощью ветрового ружья
-3. Написать pgSQL срипт, который сформирует таблицу вида в формате HTML с использованием таблицы `calc_heights`:
+1. Создать таблицу для учета [`Скорости среднего ветра`](./Docs/AlgoritmBp.md)(**Таблица 3**) для расчета с помощью ветрового ружья
+2. Написать новый отчет и оформить его в виде View и использованием CTE. **Самая эффективная высота измерения**
 
-| Высота   | Среднее отклонение температуры воздуха | Дирекционный угол направления ветра | Скорость среднего ветра | Тип устройства |
-|----------|----------------------------------------|-------------------------------------|-------------------------|----------------|
-| 200      | 0                                      | 0                                   | 0                       | ДМК            |
-
-   
-
- 
+| ФИО  | Звание | Мин. высота метеопоста | Макс. высота метепоста | Всего измерений | Из них ошибочны |
+Необходмо вывести список пользователей у которых меньше **10 ошибок** в наборе данных, которые делали не менее **5-ти** измерения
+Ошибку определеять обязательно с использованием функции проверки корректности.
+3. Написать отдельный `pgSQL` скрипт, который сформирует тестовые данные. 
+Нужно добавить несколько пользователей в таблицу emploees , а так же не менее **100 измерений** с разными параметрами для каждого пользователя. 
+Для указания высоты, давления, температуры использовать функцию `random()`. Для создания скрипта использовать циклы. 
 
 
 
