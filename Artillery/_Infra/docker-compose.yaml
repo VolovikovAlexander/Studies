@@ -38,6 +38,20 @@ services:
     depends_on:
     - postgres
 
+  restapi:
+    image: postgrest/postgrest:v9.0.0
+    container_name: "restapi"
+    environment:
+      PGRST_DB_URI: postgres://${POSTGRESQL_USER}:${POSTGRESQL_PASS}@postgres:5432/${POSTGRESQL_DB}
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: ${POSTGRESQL_USER}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - pgdata
+    restart: unless-stopped
 
 networks:
   pgdata:
