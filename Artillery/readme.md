@@ -199,7 +199,8 @@ DDL, DML, DCL, TCL
 
 \
 \
-![](.\_Images\ DSC_6530.jpeg)
+
+![](./_Images/DSC_6530.jpeg)
 
 
 
